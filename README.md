@@ -1,320 +1,286 @@
-# KIFAYAT: Intelligent LLM Context Gateway & College Helpdesk
+<div align="center">
 
-> **Kifayat** (*noun / Urdu: کفایت*): Economy, thrift, resource optimization, purposeful efficiency.
+# ⚡ KIFAYAT AI
+### Intelligent AI Inference Gateway, Prompt Repair Ladder & Assistant
+**Slashes Token Bills by up to 85% • Real-Time SSE Streaming • Autonomous Active Learning • OpenAI Drop-In Compatible**
 
-Kifayat is an enterprise-grade LLM context optimization gateway integrated with an AI-powered college helpdesk for **Kifayat Institute of Technology (KIT)**. It slashes input tokens, cuts model latency, avoids redundant strong-model escalations, and accelerates repeat queries by over **85%**, while maintaining high answer fidelity, long-term memory, and full bilingual support for both English and natural Hinglish.
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688.svg?style=flat&logo=FastAPI&logoColor=white)](https://fastapi.tiangolo.com)
+[![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12%20%7C%203.14-3776AB.svg?style=flat&logo=Python&logoColor=white)](https://www.python.org/)
+[![NVIDIA NIM](https://img.shields.io/badge/NVIDIA-NIM%20Inference-76B900.svg?style=flat&logo=NVIDIA&logoColor=white)](https://build.nvidia.com)
+[![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED.svg?style=flat&logo=Docker&logoColor=white)](https://www.docker.com/)
+[![AWS EC2](https://img.shields.io/badge/AWS-EC2%20Ready-FF9900.svg?style=flat&logo=AmazonAWS&logoColor=white)](https://aws.amazon.com/ec2/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+*“Kifayat” (كفايت / کفایت) — An Urdu & Hindi principle representing frugality, thoughtful efficiency, and wise resource management.*
+
+[🚀 Quickstart](#-quickstart-in-60-seconds) • [☁️ EC2 Deployment](#-production-deployment-amazon-ec2--docker) • [🏛️ Architecture](#-core-architecture) • [💡 Features](#-key-features) • [📖 Documentation](#-project-documentation)
+
+</div>
 
 ---
 
-## 1. What Kifayat Is & Why It Exists
+## 📌 The Problem Kifayat Solves
 
-Modern LLM applications often exhibit severe context inefficiencies:
-1. **Unbounded History Re-transmission**: Every chat turn transmits the entire conversation history back to the model, compounding token costs quadratically.
-2. **Expensive Strong Model Overuse**: Sending simple, repetitive questions to expensive 70B+ models when a verified 8B model could answer accurately.
-3. **Repeated Queries**: Common institutional queries (e.g. *"Hostel fee?", "Attendance rules?"*) are regenerated repeatedly rather than served securely from semantic response caches.
-4. **Prefix Cache Invalidation**: Random prompt rearrangements destroy GPU Key-Value (KV) prefix cache hits across inference requests.
+Deploying Large Language Models (LLMs) like GPT-4o, Claude 3.5, or LLaMA 3.1 directly into production user-facing apps leads to four critical bottlenecks:
 
-Kifayat solves this by unifying **cache-aware prompt prefix structuring**, **immutable frozen memory blocks**, **vector response caching**, **three-rung model repair escalation**, and **Bayesian exemplar retrieval** into a single cohesive gateway.
+| Problem | Traditional LLM Apps | With Kifayat AI |
+| :--- | :--- | :--- |
+| **Runaway Costs** | Re-transmits static handbooks and full history on every turn. | **14-Intent Router** isolates conversational queries (125 tokens vs 920). |
+| **High Latency (TTFT)** | 4-12 seconds spent processing heavy prefill tokens. | **Real SSE streaming** delivers Time-to-First-Token in **~1.1s**. |
+| **Model Overkill** | Expensive 70B/400B models answer greetings and simple edits. | **3-Rung Repair Ladder** verifies cheap 11B models first; escalates only when needed. |
+| **Broken Caching** | Whitespace and conversation filler shatter KV prefix caches. | **AST-Aware Squeezer** and **0-token Semantic Vector Cache** (~30ms hits). |
 
 ---
 
-## 2. Core Architecture
+## 🏛️ Core Architecture
 
-```text
-                            USER / BROWSER
-                                  │
-                       ┌──────────▼──────────┐
-                       │   Kifayat Gateway   │
-                       └──────────┬──────────┘
-                                  │
-                      [1. Input Validation]
-                                  │
-                      [2. Cacheability Guard]
-                                  │
-                  ┌───────────────┴───────────────┐
-                  ▼                               ▼
-      [Cache Safe & High Similarity]         [Cache Miss]
-                  │                               │
-        ┌─────────┴─────────┐                     ▼
-        │ Semantic Response │         [3. Context Builder]
-        │   Cache (Hit)     │         - Canonicalized Handbook
-        └─────────┬─────────┘         - Frozen Memory Blocks
-                  │                   - Recent Raw Turns Window
-                  │                   - Checkpoint Hash Positioning
-                  │                               │
-                  │                   [4. Prompt Repair Ladder]
-                  │                   ├── Rung 1: Cheap Model (8B) + Rule Checks
-                  │                   │          └── Passed Judge? ──► Return
-                  │                   ├── Rung 2: Exemplar-Assisted Rescue (Top 3)
-                  │                   │          └── Passed Judge? ──► Return
-                  │                   └── Rung 3: Strong Model Fallback (70B)
-                  │                               │
-                  │                   [5. Asynchronous Compaction]
-                  │                   - Background Worker / SQS Queue
-                  │                   - Idempotent Block Summarizer
-                  │                               │
-                  └───────────────┬───────────────┘
-                                  ▼
-                   OpenAI-Compatible Response
-                    + Kifayat Token Receipt
+```
+                             [ USER QUERY ]
+                                   │
+                                   ▼
+             [ STEP 1: SECURITY & SSRF SANITIZATION ]
+                                   │
+                                   ▼
+             [ STEP 2: 14-INTENT CLASSIFICATION ROUTER ]
+          (GREETING, CODING, HANDBOOK, TECHNICAL, CANVAS...)
+                                   │
+                                   ▼
+             [ STEP 3: RUNG 0 - VECTOR SEMANTIC CACHE ]
+                    │
+            ┌───────┴───────┐
+            │ Similarity    │ >= 0.90
+            │ Check         ├─────────────► [ INSTANT RETURN ]
+            └───────┬───────┘               0 Tokens • 30ms • 100% Saved
+                    │ < 0.90
+                    ▼
+             [ STEP 4: CONTEXT BUILDER & KV CHECKPOINTS ]
+          - Conversational Fast Path (125 tokens) OR
+          - Handbook Policy Grounding (875 tokens)
+          - Sliding window + hierarchical block compaction
+                                   │
+                                   ▼
+             [ STEP 5: DYNAMIC AST-AWARE SQUEEZER ]
+          - 100% Code syntax, math, and table preservation
+          - Prunes conversational boilerplate and filler
+                                   │
+                                   ▼
+             [ STEP 6: 3-RUNG PROMPT REPAIR LADDER ]
+          ├── RUNG 1: Cheap Model (LLaMA-3.2-11B) + Real SSE Stream
+          │          └── Passes LLM Judge (>= 3.0/5)? ──► Return
+          ├── RUNG 2: Few-Shot Exemplar Rescue Loop
+          │          └── Passes LLM Judge (>= 3.0/5)? ──► Return
+          └── RUNG 3: Frontier Fallback Model (LLaMA-3.1-70B)
+                     └── [ Autonomous Active Learning Miner ]
+                         (Captures & registers new rescue exemplar)
+                                   │
+                                   ▼
+             [ STEP 7: SEMANTIC CACHE WRITE & HISAB RECEIPT ]
+          - Verified output cached for future 0-token hits
+          - Emits auditable receipt with exact micro-dollar accounting
 ```
 
 ---
 
-## 3. The 10 Architectural Pillars
+## ⚡ Quickstart in 60 Seconds
 
-1. **Cache-Aware Prompt Restructuring**:
-   - Isolates static prompts and canonicalized handbooks prior to `<!-- CACHE_CHECKPOINT_1 -->`.
-   - Immutable frozen summaries precede `<!-- CACHE_CHECKPOINT_2 -->`.
-   - Raw turns precede `<!-- CACHE_CHECKPOINT_3 -->`. Dynamic tokens and retrieved exemplars are placed strictly at the suffix to preserve KV prefix cache reuse.
-2. **Frozen-Block Conversation Memory**:
-   - Maintains the newest `RAW_WINDOW_TURNS` (default: 3) verbatim.
-   - Older turns group into blocks of `BLOCK_TURNS` (default: 6) and are permanently frozen into immutable summaries.
-   - **Critical Invariant**: A finalized frozen block is NEVER re-written or edited, preventing prefix cache churn.
-3. **Hierarchical Memory Merging**:
-   - When 5 Level-0 blocks accumulate, the background summarizer compacts them into a Level-1 block overview, preventing long sessions from ballooning context.
-4. **Memory Token Budget Manager**:
-   - Enforces a strict token ceiling (`MAX_MEMORY_TOKENS=4000`) with deterministic priority trimming:
-     `Current Question > Recent Raw Turns > Active Block > Frozen Blocks > Overviews > Exemplars`.
-5. **Semantic Response Caching**:
-   - Dense 384-dimensional vector similarity using cosine distance (threshold $\ge 0.90$).
-   - Namespaced by `{app_id}:{handbook_version}:{language}:{model_group}` to prevent cross-app leakage.
-   - Zero LLM tokens incurred on cache hits.
-6. **Cache Safety Guard (`is_cacheable`)**:
-   - Blocks caching for queries with personalized data (*"my roll number"*, *"my fee balance"*), real-time markers (*"today"*, *"current time"*), or deictic references.
-7. **Three-Rung Prompt Repair Ladder**:
-   - **Rung 1**: Fast generation using Cheap Model (e.g. Llama-3.1-8B) followed by deterministic rule checks and automated QA judge verification.
-   - **Rung 2**: If Rung 1 fails, automatically retrieves top-3 high-impact exemplars from the `ExemplarStore` to rescue the cheap model.
-   - **Rung 3**: If Rung 2 fails, escalates safely to the Strong Model (e.g. Llama-3.1-70B).
-8. **Self-Pruning Exemplar Store**:
-   - Stores up to 500 exemplars scored using Bayesian smoothing:
-     $$\text{Score} = \frac{\text{Successful Rescues} + 2.5}{\text{Total Trials} + 5.0}$$
-   - Prevents 1-trial flukes from outranking battle-tested exemplars.
-   - Diversity pruner safeguards representation across core categories (fees, hostel, exams, placements, library) and languages (English / Hinglish).
-9. **Real-Time Streaming via Server-Sent Events (SSE)**:
-   - Streams chunks at `/v1/chat/completions` (`stream=true`) and `/api/chat/stream`.
-   - Emits structured events: `metadata` (cache hit status), `token`, `complete` (with full `kifayat_receipt`), and `error`.
-10. **Centralized Cost & Observability Engine**:
-    - Generates a `kifayat_receipt` on every response showing exact token breakdowns, latency, model ID, repair rung, and dollar savings vs unoptimized baseline.
+### Prerequisites
+- Python 3.11, 3.12, or 3.14
+- Git
 
----
+### 1. Clone & Install
+```bash
+# Clone the repository
+git clone https://github.com/Niti741/First_Commit.git
+cd First_Commit
 
-## 4. Local Quickstart (Windows)
+# Create virtual environment
+python -m venv venv
 
-The application runs **100% locally** on Windows with Python 3.10+ and requires **no external database, no Redis, no SQS, and no external API key** out of the box.
+# Activate virtual environment
+# Windows:
+.\venv\Scripts\activate
+# Linux / macOS:
+source venv/bin/activate
 
-### 4.1 Prerequisites
-- Python 3.10+ (tested on Python 3.14)
-- (Optional) NVIDIA API Key for production inference
-
-### 4.2 Installation
-In PowerShell or Command Prompt:
-```powershell
-# 1. Install dependencies
+# Install dependencies
 pip install -r requirements.txt
+```
 
-# 2. Start the local server
+### 2. Configure Environment
+```bash
+# Copy example configuration
+cp .env.example .env
+
+# Edit .env and insert your NVIDIA NIM API key
+# Windows: notepad .env | Linux/macOS: nano .env
+```
+
+```ini
+ENVIRONMENT=local
+LLM_PROVIDER=nvidia
+NVIDIA_API_KEY=nvapi-your-key-here
+NVIDIA_MODEL=meta/llama-3.2-11b-vision-instruct
+```
+
+### 3. Launch Local Server
+```bash
 python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
-Or simply double-click:
-```powershell
-scripts\run_local.bat
+Open **[http://127.0.0.1:8000](http://127.0.0.1:8000)** in Google Chrome or Microsoft Edge.
+
+---
+
+## ☁️ Production Deployment: Amazon EC2 & Docker
+
+Kifayat AI includes a complete automated deployment suite with zero-buffering SSE streaming, systemd service self-healing, and SSL termination.
+
+### Option A: 1-Click Amazon EC2 Installer (Fastest)
+
+Launch an **Ubuntu 24.04 / 22.04 LTS** instance on AWS EC2 (`t3.medium` recommended), SSH into your instance, and run:
+
+```bash
+# Clone repository
+git clone https://github.com/Niti741/First_Commit.git first_commit
+cd first_commit
+
+# Run automated production setup script
+chmod +x deploy/ec2_setup.sh
+./deploy/ec2_setup.sh
 ```
 
-### 4.3 Open the Web Interface
-Open your browser and navigate to:
+**What the installer does automatically:**
+- Sets up Python 3, virtual environment, and dependencies.
+- Creates a **2GB swap file** to protect small instances from Out-of-Memory crashes.
+- Registers and starts the `kifayat.service` systemd daemon with automatic recovery (`Restart=always`).
+- Configures **Nginx with zero-buffering** (`proxy_buffering off;`) to guarantee real-time SSE streaming.
+- Configures UFW firewall for ports 22, 80, and 443.
+
+For the complete AWS walkthrough with step-by-step console screenshots, see [`EC2_DEPLOYMENT_GUIDE.md`](EC2_DEPLOYMENT_GUIDE.md).
+
+---
+
+### Option B: Docker & Docker Compose
+
+Deploy on any Linux server with a single command:
+
+```bash
+# 1. Configure production environment
+cp .env.production.example .env
+nano .env
+
+# 2. Build and launch container stack
+docker compose up -d --build
+
+# 3. Monitor container logs
+docker compose logs -f
+```
+
+For full VPS, Nginx, and SSL instructions, read [`DEPLOYMENT.md`](DEPLOYMENT.md).
+
+---
+
+## 💡 Key Features
+
+### 1. 14 Fine-Grained Routing Intents
+Replaces binary routing with precise classification:
+`GREETING`, `CASUAL_CONVERSATION`, `EMOTIONAL_CONVERSATION`, `FOLLOW_UP`, `GENERAL_QA`, `COLLEGE`, `HANDBOOK`, `TECHNICAL`, `CODING`, `CANVAS`, `DOCUMENT`, `CURRENT_INFO`, `CREATIVE`, `COMPLEX_REASONING`.
+
+### 2. Conversational Fast-Path (Saves ~795 Tokens/Turn)
+Casual conversations skip the 875-token handbook system prompt, using a lean 125-token prompt. Input token volume drops from **~920 to 125 tokens**, delivering sub-1.2s TTFT.
+
+### 3. Prompt Repair Ladder & Autonomous Exemplar Mining
+- **Rung 0**: Vector Semantic Cache (0 tokens, ~30ms).
+- **Rung 1**: High-throughput cheap model with real-time SSE streaming and automated LLM Judge quality evaluation.
+- **Rung 2**: Few-shot exemplar rescue.
+- **Rung 3**: Strong frontier model fallback.
+- **Active Learning**: Difficult queries resolved at Rung 3 are automatically analyzed and saved to `ExemplarStore` so future requests succeed at Rung 2!
+
+### 4. Interactive Canvas Workspace
+Integrated live code execution sandbox:
+- **Synchronized Line 1**: Editor and line-number gutter always start at Line 1.
+- **Auto-Run (400ms)**: Real-time debounced live preview in an isolated sandboxed iframe.
+- **Console Log Bridge**: Captures standard console outputs and errors via postMessage bridge.
+- **Code Export & Universal Copy**: One-click download and clipboard feedback.
+
+### 5. Dual A/B Telemetry Benchmark Mode
+Toggle **A/B Benchmark** in the chat header to compare Kifayat against an unoptimized baseline side-by-side with live meters for latency, tokens, and cost.
+
+### 6. Drop-In OpenAI Compatibility
+Point any external app (LangChain, LlamaIndex, Cursor, OpenWebUI) to Kifayat:
+```bash
+curl -X POST http://127.0.0.1:8000/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "kifayat-gateway",
+    "messages": [{"role": "user", "content": "Explain prefix caching"}]
+  }'
+```
+
+---
+
+## 📁 Repository Directory Structure
+
 ```text
-http://127.0.0.1:8000
-```
-You will see the **Kifayat Helpdesk & Gateway Dashboard** featuring:
-- **💬 Chat Demo**: Live interactive bilingual chat with real-time SSE streaming and Kifayat Receipt drawer.
-- **📊 Gateway Overview**: Real-time KPI cards for requests, cache hit rate, tokens saved, and cost saved.
-- **💰 Cost Analytics**: Dollar comparison of actual optimized cost vs unoptimized baseline.
-- **⚡ Semantic Cache**: Cache entries, hit rates, and manual invalidation controls.
-- **🧊 Memory Inspector**: Visual tree of active sessions, raw turns, and immutable frozen blocks.
-- **🛡️ Repair Ladder**: Rung 1, 2, and 3 architecture statistics.
-- **📚 Exemplar Store**: Table of vetted exemplars with Bayesian scores and win rates.
-- **📜 Request Audit Log**: Detailed log of all processed queries.
-
----
-
-## 5. Configuration (`.env`)
-
-Configuration is managed via environment variables defined in `.env`:
-
-```env
-ENVIRONMENT=local
-
-# Provider: 'mock' (default offline) | 'nvidia' | 'bedrock'
-LLM_PROVIDER=mock
-
-# NVIDIA Configuration (required only when LLM_PROVIDER=nvidia)
-NVIDIA_API_KEY=
-NVIDIA_MODEL=meta/llama-3.1-8b-instruct
-NVIDIA_BASE_URL=https://integrate.api.nvidia.com/v1
-CHEAP_MODEL_ID=meta/llama-3.1-8b-instruct
-STRONG_MODEL_ID=meta/llama-3.1-70b-instruct
-JUDGE_MODEL_ID=meta/llama-3.1-70b-instruct
-
-AWS_REGION=us-east-1
-
-PROJECT_NAME=Kifayat
-APP_ID=helpdesk
-HANDBOOK_NAME=Kifayat Institute of Technology
-HANDBOOK_VERSION=1.0.0
-APPLICATION_VERSION=1.0.0
-
-# Memory Configuration
-RAW_WINDOW_TURNS=3
-BLOCK_TURNS=6
-BLOCKS_PER_MERGE=5
-MAX_MEMORY_TOKENS=4000
-
-# Semantic Cache Configuration
-SEMANTIC_CACHE_ENABLED=true
-SEMANTIC_CACHE_THRESHOLD=0.90
-SEMANTIC_CACHE_TTL=86400
-SEMANTIC_CACHE_MAX_ENTRIES=10000
-
-# Compaction Configuration
-COMPACTION_ENABLED=true
-COMPACTION_QUEUE_TYPE=local
-
-# Exemplar Store Configuration
-MAX_EXEMPLARS=500
-EXEMPLAR_MIN_EVALUATIONS=5
-EXEMPLAR_STALE_DAYS=90
-
-# Generation Limits
-MAX_OUTPUT_TOKENS=500
-MAX_QUESTION_LENGTH=2000
-
-STREAMING_ENABLED=true
-MODES=baseline,cache_only,naive,kifayat
+First_Commit/
+├── backend/
+│   ├── app/
+│   │   ├── api/                 # API endpoints (chat, v1_proxy, analytics)
+│   │   ├── context/             # Squeezer, builder, canonicalizer
+│   │   ├── core/                # Security, key masking, SSRF defense
+│   │   ├── exemplars/           # Active learning miner & Bayesian store
+│   │   ├── memory/              # Sliding window & compaction manager
+│   │   ├── providers/           # NVIDIA NIM, mock provider, router
+│   │   ├── repair/              # 3-Rung repair ladder, LLM Judge
+│   │   ├── storage/             # Domain repository contracts & SQLite store
+│   │   ├── gateway.py           # Central gateway orchestrator
+│   │   ├── router.py            # 14-intent classifier & fast path
+│   │   └── main.py              # FastAPI application entrypoint
+│   ├── data/                    # Handbook context and seed exemplars
+│   └── tests/                   # Pytest automated test suites
+├── frontend/
+│   ├── index.html               # React 18 single-page application
+│   ├── css/                     # HSL design tokens and styles
+│   └── js/                      # Chat, Canvas, and Dashboard controllers
+├── deploy/
+│   ├── ec2_setup.sh             # 1-click automated EC2 setup script
+│   ├── kifayat.service          # Production systemd daemon
+│   └── nginx.conf               # Nginx reverse proxy with zero-buffering SSE
+├── Dockerfile                   # Production container image
+├── docker-compose.yml           # 1-command Docker Compose stack
+├── .dockerignore                # Docker build exclusions
+├── .env.example                 # Local environment template
+├── .env.production.example      # Production environment template
+├── EC2_DEPLOYMENT_GUIDE.md      # Complete step-by-step AWS EC2 guide
+├── DEPLOYMENT.md                # Multi-platform deployment manual
+├── hisab_kitab.txt              # Master project manual (v2.5.0)
+├── promptt.md                   # Video presentation walkthrough script
+└── requirements.txt             # Python dependencies
 ```
 
 ---
 
-## 6. How NVIDIA Integration Works
+## 📖 Project Documentation
 
-When switching to live NVIDIA NIM endpoints:
-1. Obtain an API key from NVIDIA Build (`https://build.nvidia.com`).
-2. Update `.env`:
-   ```env
-   LLM_PROVIDER=nvidia
-   NVIDIA_API_KEY=nvapi-your-real-key-here
-   ```
-3. Restart the server. The `NVIDIAProvider` seamlessly handles:
-   - Inference via OpenAI-compatible endpoints with Bearer authentication.
-   - Real-time chunked SSE streaming.
-   - NeMo Retriever query embedding vectors.
-   - Factual consistency judge evaluations via Llama-3.1-70B.
+- **[EC2 Deployment Guide](EC2_DEPLOYMENT_GUIDE.md)**: Complete step-by-step guide for deploying onto AWS EC2 with systemd and Nginx.
+- **[Deployment Manual](DEPLOYMENT.md)**: Multi-platform deployment instructions covering Docker, EC2, VPS, and SSL.
+- **[Hisab-Kitab Manual (`hisab_kitab.txt`)](hisab_kitab.txt)**: Exhaustive technical manual detailing architectural innovations and accounting mathematics.
+- **[Video Presentation Guide (`promptt.md`)](promptt.md)**: Timed presentation script (0:00 - 8:45), visual cues, and hackathon Q&A defense points.
 
 ---
 
-## 7. Running Tests & Benchmarks
+## 🧪 Testing & Verification
 
-### 7.1 Automated Unit & Integration Tests
-Run the complete Pytest suite (21 test cases covering all 10 architectural components):
-```powershell
+Run the automated test suite:
+```bash
 python -m pytest backend/tests/ -v
 ```
 
-### 7.2 Running Benchmark Evaluation
-Run the comparative evaluation across Baseline, Naive, Cache-Only, and Kifayat modes:
-```powershell
-python eval/runner.py
-```
-Sample benchmark output:
-```text
-======================================================================
-Mode         | Tokens     | Cost (USD)   | Cache Hits  | Strong LLM | Savings % 
-----------------------------------------------------------------------
-baseline     | 63716      | $0.033264    | 0           | 13         | 0.0       %
-naive        | 63716      | $0.004168    | 0           | 0          | 87.5      %
-cache_only   | 58900      | $0.003852    | 1           | 0          | 88.4      %
-kifayat      | 58900      | $0.003852    | 1           | 0          | 88.4      %
-======================================================================
+Test live NVIDIA NIM provider reachability:
+```bash
+curl -X POST http://127.0.0.1:8000/v1/provider/test
 ```
 
 ---
 
-## 8. Future AWS Deployment Readiness
-
-All interfaces are structured for seamless cloud scaling:
-| Local Implementation | Future AWS Cloud Component | Adapter File |
-|---|---|---|
-| `SQLiteStore` (Sessions) | Amazon DynamoDB (`KifayatSessions`) | `backend/app/storage/aws_adapters.py` |
-| `SQLiteStore` (Exemplars)| Amazon DynamoDB (`KifayatExemplars`) | `backend/app/storage/aws_adapters.py` |
-| `LocalCompactionQueue` | Amazon SQS + AWS Lambda | `backend/app/memory/compaction_queue.py` |
-| `LocalSemanticCache` | Amazon ElastiCache (Valkey/Redis) | `backend/app/cache/redis_cache.py` |
-| `MockProvider` / NVIDIA | Amazon Bedrock (Claude / Titan) | `backend/app/providers/bedrock_provider.py` |
-| SQLite Request Logs | AWS CloudWatch EMF / DynamoDB | `backend/app/storage/aws_adapters.py` |
-| Vanilla Web Frontend | AWS Amplify Hosting | Static web directory `frontend/` |
-
----
-
-## 9. API Reference
-
-### 9.1 Chat Completion (OpenAI-Compatible)
-`POST /v1/chat/completions`
-```json
-{
-  "messages": [
-    {"role": "user", "content": "Hostel ka fee kitna hai?"}
-  ],
-  "stream": false,
-  "mode": "kifayat"
-}
-```
-Response contains standard OpenAI choices and the custom `kifayat_receipt`:
-```json
-{
-  "id": "req-9a8f23",
-  "object": "chat.completion",
-  "model": "meta/llama-3.1-8b-instruct",
-  "choices": [
-    {
-      "message": {
-        "role": "assistant",
-        "content": "KIT mein hostel fee room type ke hisaab se hoti hai: Single room ka ₹42,000 per semester..."
-      }
-    }
-  ],
-  "kifayat_receipt": {
-    "request_id": "req-9a8f23",
-    "model_id": "meta/llama-3.1-8b-instruct",
-    "rung": 1,
-    "input_tokens": 1280,
-    "output_tokens": 68,
-    "tokens_saved": 960,
-    "cost_usd": 0.000076,
-    "baseline_cost_usd": 0.002672,
-    "saving_pct": 97.16,
-    "cache_hit": false,
-    "latency_ms": 48.2,
-    "judge_score": 5
-  }
-}
-```
-
-### 9.2 Feedback Submission
-`POST /v1/feedback`
-```json
-{
-  "request_id": "req-9a8f23",
-  "question": "What is the hostel fee?",
-  "answer": "Single occupancy room fee is ₹42,000 per semester.",
-  "thumbs_up": true,
-  "category": "hostel"
-}
-```
-
----
-
-## 10. Troubleshooting
-
-- **Server fails to start with port already in use**:
-  Run `python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8080` to bind to an alternative port.
-- **Testing without NVIDIA credentials**:
-  Keep `LLM_PROVIDER=mock` in `.env`. The MockProvider executes full offline factual generation, streaming, embeddings, and judge verification.
+## 📄 License
+This project is open-source and licensed under the [MIT License](LICENSE).
