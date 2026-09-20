@@ -1,0 +1,212 @@
+[
+  {
+    "id": "ex-001",
+    "question": "What is the hostel fee per semester?",
+    "answer": "At Kifayat Institute of Technology, hostel room fees per semester depend on occupancy: Single Occupancy is ₹42,000, Double Occupancy is ₹32,000, and Triple Occupancy is ₹24,000. Additionally, standard utility/electricity is ₹8,000 per semester, and there is a one-time refundable caution deposit of ₹15,000.",
+    "category": "hostel",
+    "language": "en"
+  },
+  {
+    "id": "ex-002",
+    "question": "Hostel ka fee kitna hai?",
+    "answer": "KIT mein hostel fee room type ke hisaab se hoti hai: Single room ka ₹42,000 per semester, Double occupancy ka ₹32,000 per semester, aur Triple occupancy ka ₹24,000 per semester hai. Iske alawa ₹8,000 utility charges lagte hain aur ek baar ₹15,000 refundable hostel caution deposit dena hota hai.",
+    "category": "hostel",
+    "language": "hinglish"
+  },
+  {
+    "id": "ex-003",
+    "question": "Is mess fee included in the hostel rent?",
+    "answer": "No, mess charges are NOT included in the hostel room rent. The standard pure vegetarian mess charge is ₹22,500 per semester paid separately to the Central Mess Committee (CMC). Optional egg counter service is available for an extra ₹2,500 per semester.",
+    "category": "mess",
+    "language": "en"
+  },
+  {
+    "id": "ex-004",
+    "question": "Kya hostel fee mein mess included hai?",
+    "answer": "Nahi, hostel fee mein mess charges include nahi hain. Standard vegetarian mess ka charge ₹22,500 per semester alag se Central Mess Committee ko pay karna hota hai. Agar egg counter service chahiye toh ₹2,500 per semester extra lagta hai.",
+    "category": "mess",
+    "language": "hinglish"
+  },
+  {
+    "id": "ex-005",
+    "question": "What is the minimum attendance required to appear for exams?",
+    "answer": "Students must maintain a minimum of 75% attendance in each course (lectures, tutorials, and practicals evaluated separately). If attendance falls between 65% and 74.9% due to documented medical reasons, condonation may be granted by the Dean of Academic Affairs. Attendance below 65% results in immediate course detention (FA grade).",
+    "category": "attendance",
+    "language": "en"
+  },
+  {
+    "id": "ex-006",
+    "question": "Exam dene ke liye minimum attendance kitna chahiye?",
+    "answer": "Exams ke liye har course mein minimum 75% attendance zaroori hai. Serious medical reason hone par 65% se 74.9% ke beech attendance condonation Dean of Academic Affairs se mil sakta hai. Lekin agar 65% se kam attendance hui, toh course mein detain (FA grade) kar diya jata hai.",
+    "category": "attendance",
+    "language": "hinglish"
+  },
+  {
+    "id": "ex-007",
+    "question": "What is the placement eligibility criteria at KIT?",
+    "answer": "To register for campus placements through the Training and Placement Cell (TPC), a student must have a minimum Cumulative Grade Point Average (CGPA) of 6.50 at the end of the 6th semester with zero active backlogs. Furthermore, at least 85% attendance is required in the 5th-semester Placement Training Program.",
+    "category": "placements",
+    "language": "en"
+  },
+  {
+    "id": "ex-008",
+    "question": "Placement drive ke liye eligibility criteria kya hai?",
+    "answer": "Campus placements ke liye 6th semester ke end tak minimum 6.50 CGPA hona chahiye aur koi bhi active backlog nahi honi chahiye. Iske alawa 5th semester ke Placement Training Program (PTP) mein kam se kam 85% attendance zaroori hai.",
+    "category": "placements",
+    "language": "hinglish"
+  },
+  {
+    "id": "ex-009",
+    "question": "Where is the Training and Placement Cell located?",
+    "answer": "The Corporate Relations & Training Placement Cell (TPC) is located on the 4th Floor of the Apex Administrative Tower. Office hours are Monday through Friday, 9:00 AM to 6:00 PM, and Saturday from 9:00 AM to 1:00 PM.",
+    "category": "placements",
+    "language": "en"
+  },
+  {
+    "id": "ex-010",
+    "question": "Placement cell kahan par situated hai?",
+    "answer": "Training & Placement Cell (TPC) Apex Administrative Tower ke 4th Floor par sthit hai. Yeh Monday se Friday subah 9:00 AM se shaam 6:00 PM tak khula rehta hai.",
+    "category": "placements",
+    "language": "hinglish"
+  },
+  {
+    "id": "ex-011",
+    "question": "How many books can a B.Tech student issue from the library?",
+    "answer": "Undergraduate B.Tech students are permitted to borrow up to 4 books simultaneously for a loan period of 14 calendar days. Overdue fines are ₹5 per day per book for the first 7 overdue days, and ₹10 per day per book thereafter.",
+    "category": "library",
+    "language": "en"
+  },
+  {
+    "id": "ex-012",
+    "question": "B.Tech student library se kitni books issue karwa sakta hai?",
+    "answer": "B.Tech student ek baar mein maximum 4 books 14 din ke liye borrow kar sakta hai. Late return karne par pehle 7 din ₹5/day per book aur uske baad ₹10/day per book fine lagta hai.",
+    "category": "library",
+    "language": "hinglish"
+  },
+  {
+    "id": "ex-013",
+    "question": "What is the tuition fee for B.Tech CSE per semester?",
+    "answer": "The tuition fee for B.Tech in Computer Science & Engineering (as well as ECE and DSAI) is ₹1,25,000 per semester. Additional institutional semester fees include Development fee (₹12,000), Computer/Internet (₹5,000), Labs (₹6,000), Library (₹3,500), Sports/Cultural (₹4,500), and Examination fee (₹3,000).",
+    "category": "fees",
+    "language": "en"
+  },
+  {
+    "id": "ex-014",
+    "question": "BTech CSE ki per semester tuition fees kitni hai?",
+    "answer": "B.Tech CSE (aur ECE/DSAI) ke liye tuition fee ₹1,25,000 per semester hai. Iske alawa institutional fees jaise development, lab aur exam fees milakar lagbhag ₹34,000 extra charges per semester lagte hain.",
+    "category": "fees",
+    "language": "hinglish"
+  },
+  {
+    "id": "ex-015",
+    "question": "What is the Kifayat Prerna Scholarship eligibility?",
+    "answer": "The Kifayat Prerna Financial Aid is a merit-cum-means scholarship for students whose total family annual income is below ₹4,50,000 (4.5 Lakhs). Students must maintain a minimum CGPA of 7.00 without any disciplinary reprimands, and awards provide 40% to 75% tuition fee waivers.",
+    "category": "scholarships",
+    "language": "en"
+  },
+  {
+    "id": "ex-016",
+    "question": "Kifayat Prerna scholarship ke liye kaun eligible hai?",
+    "answer": "Kifayat Prerna scholarship un students ke liye hai jinki family annual income ₹4,50,000 se kam ho. Iske liye student ka minimum 7.00 CGPA hona chahiye aur koi disciplinary record nahi hona chahiye. Isme 40% se 75% tak tuition fee waiver milta hai.",
+    "category": "scholarships",
+    "language": "hinglish"
+  },
+  {
+    "id": "ex-017",
+    "question": "What are the hostel in-time curfew rules?",
+    "answer": "The campus in-time curfew for senior undergraduate students is 10:30 PM from Sunday to Thursday, and 11:30 PM on Fridays and Saturdays. For first-year freshers in their first semester, the in-time curfew is strictly 9:30 PM.",
+    "category": "hostel",
+    "language": "en"
+  },
+  {
+    "id": "ex-018",
+    "question": "Hostel aane ka last time (curfew) kya hai?",
+    "answer": "Hostel in-time Sunday se Thursday raat 10:30 PM tak aur Friday-Saturday ko 11:30 PM tak hai. First year students ke liye pehle semester mein curfew strictly 9:30 PM hai.",
+    "category": "hostel",
+    "language": "hinglish"
+  },
+  {
+    "id": "ex-019",
+    "question": "What is the examination grading scale at KIT?",
+    "answer": "KIT follows a 10-point relative grading scale: O (Outstanding, 10 pts), A+ (Excellent, 9 pts), A (Very Good, 8 pts), B+ (Good, 7 pts), B (Above Average, 6 pts), C (Pass, 5 pts), and F (Fail, 0 pts). Minimum pass mark is 40% aggregate.",
+    "category": "academic",
+    "language": "en"
+  },
+  {
+    "id": "ex-020",
+    "question": "Who is the Head of the Computer Science and Engineering Department?",
+    "answer": "Prof. Rajeshwar Sharma is the Head of the Department of Computer Science & Engineering. His office is located on the 2nd Floor of the Ramanujan Computing Complex (RCC), and he can be reached via email at hod.cse@kifayat.ac.in.",
+    "category": "departments",
+    "language": "en"
+  },
+  {
+    "id": "ex-021",
+    "question": "CSE department ke HOD kaun hain aur unka office kahan hai?",
+    "answer": "CSE department ke HOD Prof. Rajeshwar Sharma hain. Unka office Ramanujan Computing Complex (RCC) building ke 2nd Floor par sthit hai aur unka email hod.cse@kifayat.ac.in hai.",
+    "category": "departments",
+    "language": "hinglish"
+  },
+  {
+    "id": "ex-022",
+    "question": "What is the contact number for medical emergencies on campus?",
+    "answer": "For 24x7 medical emergencies on campus, contact the Charaka Health Center directly at +91-11-2955-0199 or dial Intercom 199 from any internal campus phone. Two dedicated ambulances are stationed round-the-clock.",
+    "category": "services",
+    "language": "en"
+  },
+  {
+    "id": "ex-023",
+    "question": "Campus mein medical emergency hone par kis number par call karein?",
+    "answer": "Medical emergency ke waqt Charaka Health Center ke 24x7 emergency helpline +91-11-2955-0199 ya internal campus phone se Intercom 199 dial karein. Campus mein 2 ambulances 24 ghante tayyar rehti hain.",
+    "category": "services",
+    "language": "hinglish"
+  },
+  {
+    "id": "ex-024",
+    "question": "What is the fee payment deadline for the Autumn semester?",
+    "answer": "The fee payment deadline for the Autumn (Odd) semester is July 25. A 7-day grace period is provided without penalty. Payments from day 8 to 15 incur a ₹1,000 late fine, and days 16 to 30 incur a ₹3,500 fine. De-registration occurs after 30 days.",
+    "category": "fees",
+    "language": "en"
+  },
+  {
+    "id": "ex-025",
+    "question": "How is the semester theory course marks evaluation distributed?",
+    "answer": "Theory courses are evaluated through: Continuous Internal Evaluation (CIE) carrying 20% (quizzes, assignments, and presentations), Mid-Semester Examination (MSE) carrying 30%, and End-Semester Examination (ESE) carrying 50%.",
+    "category": "academic",
+    "language": "en"
+  },
+  {
+    "id": "ex-026",
+    "question": "What is the highest and average package in campus placements?",
+    "answer": "For 2024–2025, the highest international package was $145,000 USD/annum (QuantumWorks Zurich) and the highest domestic package was ₹54.50 LPA (TowerApex Analytics). The average package for CSE & DSAI branches was ₹16.80 LPA, and ECE was ₹12.40 LPA.",
+    "category": "placements",
+    "language": "en"
+  },
+  {
+    "id": "ex-027",
+    "question": "Highest package aur CSE ka average package kitna gaya hai?",
+    "answer": "2024-25 batch ke liye highest domestic package ₹54.50 LPA tha aur highest international offer $145,000 USD tha. CSE aur DSAI branches ka average package ₹16.80 LPA raha hai.",
+    "category": "placements",
+    "language": "hinglish"
+  },
+  {
+    "id": "ex-028",
+    "question": "Is non-vegetarian food served in the college mess?",
+    "answer": "All college messes at KIT serve 100% vegetarian food by default. Non-vegetarian meat/chicken is not prepared in the regular kitchens, but an optional egg counter (boiled eggs/omelets) is available during breakfast and dinner for ₹2,500 extra per semester.",
+    "category": "mess",
+    "language": "en"
+  },
+  {
+    "id": "ex-029",
+    "question": "What is the policy on ragging at KIT?",
+    "answer": "KIT enforces a strict Zero-Tolerance policy against ragging in compliance with Supreme Court directives. Ragging is a non-bailable criminal offense resulting in instant suspension, expulsion from college and hostels, and police FIR registration. The 24x7 Anti-Ragging helpline is +91-11-2955-0111.",
+    "category": "services",
+    "language": "en"
+  },
+  {
+    "id": "ex-030",
+    "question": "What is the Tagore Central Library timing during exam weeks?",
+    "answer": "During Mid-Semester (MSE) and End-Semester (ESE) exam periods, Tagore Central Library remains open 24 hours a day, 7 days a week, with continuous air-conditioned reading halls and Wi-Fi access for students.",
+    "category": "library",
+    "language": "en"
+  }
+]

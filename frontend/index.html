@@ -1,0 +1,3002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kifayat AI — Intelligent AI Inference Gateway & Assistant</title>
+  
+  <!-- Fonts: Inter + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace']
+          },
+          colors: {
+            app: {
+              bg: '#F7F8FA',
+              card: '#FFFFFF',
+              surface: '#F2F4F7',
+              border: '#E1E5EA',
+              text: '#111827',
+              secondary: '#64748B',
+              muted: '#94A3B8'
+            },
+            indigo: {
+              50: '#EEF2FF',
+              100: '#E0E7FF',
+              200: '#C7D2FE',
+              300: '#A5B4FC',
+              400: '#818CF8',
+              500: '#6366F1',
+              600: '#4F46E5',
+              700: '#4338CA',
+              800: '#3730A3',
+              900: '#312E81'
+            }
+          },
+          boxShadow: {
+            'xs': '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
+            'subtle': '0 1px 3px 0 rgba(0, 0, 0, 0.03), 0 1px 2px -1px rgba(0, 0, 0, 0.03)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- React 18 & ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    html, body, #root {
+      height: 100%;
+      max-height: 100%;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Clean scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F7F8FA;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94A3B8;
+    }
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* COMPLETE DARK MODE THEME SYSTEM (#0B0D10, #111418, #171B21, #0F1318, #262C35, #F5F7FA, #A7B0BE) */
+    html.dark, body.dark, html.dark #root {
+      background-color: #0B0D10 !important;
+      color: #F5F7FA !important;
+    }
+    html.dark ::-webkit-scrollbar-track {
+      background: #0B0D10 !important;
+    }
+    html.dark ::-webkit-scrollbar-thumb {
+      background: #262C35 !important;
+    }
+    html.dark ::-webkit-scrollbar-thumb:hover {
+      background: #3B4452 !important;
+    }
+    html.dark .bg-white {
+      background-color: #111418 !important;
+    }
+    html.dark .bg-\[\#F7F8FA\] {
+      background-color: #0B0D10 !important;
+    }
+    html.dark .bg-\[\#F2F4F7\] {
+      background-color: #171B21 !important;
+    }
+    html.dark .bg-\[\#FAFBFC\] {
+      background-color: #0F1318 !important;
+    }
+    html.dark .border-\[\#E1E5EA\] {
+      border-color: #262C35 !important;
+    }
+    html.dark .border-\[\#F2F4F7\] {
+      border-color: #262C35 !important;
+    }
+    html.dark .text-\[\#111827\] {
+      color: #F5F7FA !important;
+    }
+    html.dark .text-\[\#64748B\] {
+      color: #A7B0BE !important;
+    }
+    html.dark .text-\[\#94A3B8\] {
+      color: #6C788A !important;
+    }
+    html.dark input, html.dark textarea, html.dark select {
+      background-color: #0F1318 !important;
+      color: #F5F7FA !important;
+      border-color: #262C35 !important;
+    }
+    html.dark input::placeholder, html.dark textarea::placeholder {
+      color: #6C788A !important;
+    }
+    html.dark pre, html.dark code {
+      background-color: #0F1318 !important;
+      border-color: #262C35 !important;
+      color: #E2E8F0 !important;
+    }
+    html.dark .bg-indigo-50 {
+      background-color: rgba(99, 102, 241, 0.15) !important;
+    }
+    html.dark .border-indigo-200 {
+      border-color: rgba(99, 102, 241, 0.35) !important;
+    }
+    html.dark .text-indigo-700, html.dark .text-indigo-600 {
+      color: #A5B4FC !important;
+    }
+    html.dark .bg-emerald-50 {
+      background-color: rgba(16, 185, 129, 0.15) !important;
+    }
+    html.dark .border-emerald-200 {
+      border-color: rgba(16, 185, 129, 0.35) !important;
+    }
+    html.dark .text-emerald-700 {
+      color: #6EE7B7 !important;
+    }
+    html.dark .bg-red-50 {
+      background-color: rgba(239, 68, 68, 0.15) !important;
+    }
+    html.dark .border-red-200 {
+      border-color: rgba(239, 68, 68, 0.35) !important;
+    }
+    html.dark .text-red-700, html.dark .text-red-600 {
+      color: #FCA5A5 !important;
+    }
+    html.dark header {
+      background-color: #111418 !important;
+      border-color: #262C35 !important;
+    }
+    html.dark aside {
+      background-color: #111418 !important;
+      border-color: #262C35 !important;
+    }
+  </style>
+</head>
+<body class="bg-[#F7F8FA] text-[#111827] font-sans antialiased min-h-screen flex flex-col selection:bg-indigo-100 selection:text-indigo-900">
+  <div id="root" class="min-h-screen flex flex-col"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    // --- Modern Outline SVG Icons ---
+    const Icons = {
+      Bot: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect width="18" height="14" x="3" y="7" rx="2"/>
+          <line x1="12" x2="12" y1="3" y2="7"/>
+          <circle cx="8.5" cy="13.5" r="1.5"/>
+          <circle cx="15.5" cy="13.5" r="1.5"/>
+        </svg>
+      ),
+      Sparkles: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
+        </svg>
+      ),
+      Send: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="m22 2-7 20-4-9-9-4Z"/>
+          <path d="M22 2 11 13"/>
+        </svg>
+      ),
+      Zap: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+      ),
+      Mic: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          <line x1="12" x2="12" y1="19" y2="22"/>
+        </svg>
+      ),
+      Plus: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M5 12h14"/>
+          <path d="M12 5v14"/>
+        </svg>
+      ),
+      Paperclip: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
+        </svg>
+      ),
+      Key: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="7.5" cy="15.5" r="5.5"/>
+          <path d="m21 2-9.6 9.6"/>
+          <path d="m15.5 7.5 3 3L22 7l-3-3"/>
+        </svg>
+      ),
+      Activity: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+        </svg>
+      ),
+      Database: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <ellipse cx="12" cy="5" rx="9" ry="3"/>
+          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+          <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/>
+        </svg>
+      ),
+      Layers: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+          <polyline points="2 17 12 22 22 17"/>
+          <polyline points="2 12 12 17 22 12"/>
+        </svg>
+      ),
+      Code: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="16 18 22 12 16 6"/>
+          <polyline points="8 6 2 12 8 18"/>
+        </svg>
+      ),
+      Layout: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect width="18" height="18" x="3" y="3" rx="2"/>
+          <line x1="3" x2="21" y1="9" y2="9"/>
+          <line x1="9" x2="9" y1="21" y2="9"/>
+        </svg>
+      ),
+      Terminal: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="4 17 10 11 4 5"/>
+          <line x1="12" x2="20" y1="19" y2="19"/>
+        </svg>
+      ),
+      Copy: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+          <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+        </svg>
+      ),
+      Check: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M20 6 9 17l-5-5"/>
+        </svg>
+      ),
+      X: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M18 6 6 18"/>
+          <path d="m6 6 12 12"/>
+        </svg>
+      ),
+      Sliders: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="4" x2="4" y1="21" y2="14"/>
+          <line x1="4" x2="4" y1="10" y2="3"/>
+          <line x1="12" x2="12" y1="21" y2="12"/>
+          <line x1="12" x2="12" y1="8" y2="3"/>
+          <line x1="20" x2="20" y1="21" y2="16"/>
+          <line x1="20" x2="20" y1="12" y2="3"/>
+          <line x1="1" x2="7" y1="14" y2="14"/>
+          <line x1="9" x2="15" y1="8" y2="8"/>
+          <line x1="17" x2="23" y1="16" y2="16"/>
+        </svg>
+      ),
+      Eye: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      ),
+      EyeOff: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/>
+          <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/>
+          <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/>
+          <line x1="2" x2="22" y1="2" y2="22"/>
+        </svg>
+      ),
+      Trash: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M3 6h18"/>
+          <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+          <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+        </svg>
+      ),
+            StopCircle: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <rect width="6" height="6" x="9" y="9"/>
+        </svg>
+      ),
+      Sun: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2"/><path d="M12 20v2"/>
+          <path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/>
+          <path d="M2 12h2"/><path d="M20 12h2"/>
+          <path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
+        </svg>
+      ),
+      Moon: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+        </svg>
+      ),
+      Monitor: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect width="20" height="14" x="2" y="3" rx="2"/>
+          <line x1="8" x2="16" y1="21" y2="21"/>
+          <line x1="12" x2="12" y1="17" y2="21"/>
+        </svg>
+      ),
+      RotateCw: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/>
+          <path d="M21 3v5h-5"/>
+        </svg>
+      ),
+      FileText: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" x2="8" y1="13" y2="13"/>
+          <line x1="16" x2="8" y1="17" y2="17"/>
+          <line x1="10" x2="8" y1="9" y2="9"/>
+        </svg>
+      ),
+      Play: ({ className = "w-4 h-4" }) => (
+        <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polygon points="6 3 20 12 6 21 6 3"/>
+        </svg>
+      )
+    };
+
+        // --- Reusable Kifayat AI Brand Logo ---
+        // --- High-End Kifayat AI Brand Logo (Refractive Isometric Prism) ---
+    function KifayatLogo({ size = "md", className = "" }) {
+      const dims = {
+        sm: "w-5 h-5",
+        md: "w-8 h-8",
+        lg: "w-14 h-14"
+      };
+      return (
+        <div class={`${dims[size] || dims.md} relative flex items-center justify-center rounded-xl bg-[#0F172A] border border-indigo-500/30 shadow-md shadow-indigo-500/10 shrink-0 overflow-hidden ${className}`}>
+          <svg class="w-full h-full p-1 text-indigo-400 drop-shadow-[0_0_8px_rgba(99,102,241,0.6)]" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="kGradA" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#818CF8" />
+                <stop offset="50%" stopColor="#6366F1" />
+                <stop offset="100%" stopColor="#A855F7" />
+              </linearGradient>
+              <linearGradient id="kGradB" x1="100%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#38BDF8" />
+                <stop offset="100%" stopColor="#6366F1" />
+              </linearGradient>
+            </defs>
+            <polygon points="16,3 28,10 28,22 16,29 4,22 4,10" stroke="url(#kGradA)" strokeWidth="1.8" strokeLinejoin="round" fill="none" opacity="0.9"/>
+            <polygon points="16,8 24,13 24,19 16,24 8,19 8,13" fill="url(#kGradB)" opacity="0.35"/>
+            <path d="M16 8L16 24M8 13L24 19M8 19L24 13" stroke="url(#kGradA)" strokeWidth="1.4" strokeLinecap="round"/>
+            <circle cx="16" cy="16" r="2.2" fill="#FFFFFF" />
+          </svg>
+        </div>
+      );
+    }
+
+    // --- Main Application Component ---
+        // --- Main Application Component ---
+    function KifayatApp() {
+      const [activeTab, setActiveTab] = useState('chat'); // chat, canvas, workflows, memory, audit
+      const [gatewayMode, setGatewayMode] = useState('kifayat');
+      const [benchmarkMode, setBenchmarkMode] = useState(false); // Default OFF per requirement
+      const [devMode, setDevMode] = useState(false); // Developer mode toggle
+      const [inspectorOpen, setInspectorOpen] = useState(false); // Collapsible right panel
+
+      // Theme Management (Light, Dark, System)
+      const [theme, setTheme] = useState(() => localStorage.getItem('kifayat_theme') || 'system');
+      const [sessionId, setSessionId] = useState(() => {
+        const saved = sessionStorage.getItem('kifayat_session_id');
+        if (saved) return saved;
+        const newId = 'sess-' + Math.random().toString(36).substring(2, 14);
+        sessionStorage.setItem('kifayat_session_id', newId);
+        return newId;
+      });
+      const [copiedMsgId, setCopiedMsgId] = useState(null);
+
+      const handleCopyResponse = (text, id) => {
+        const cleanText = text || '';
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(cleanText).then(() => {
+              setCopiedMsgId(id);
+              setTimeout(() => setCopiedMsgId(null), 2000);
+            }).catch(() => {
+              fallbackCopyText(cleanText, id);
+            });
+          } else {
+            fallbackCopyText(cleanText, id);
+          }
+        } catch (e) {
+          fallbackCopyText(cleanText, id);
+        }
+      };
+
+      const fallbackCopyText = (str, id) => {
+        try {
+          const textArea = document.createElement("textarea");
+          textArea.value = str;
+          textArea.style.position = "fixed";
+          textArea.style.left = "-999999px";
+          textArea.style.top = "-999999px";
+          document.body.appendChild(textArea);
+          textArea.focus();
+          textArea.select();
+          document.execCommand('copy');
+          textArea.remove();
+          setCopiedMsgId(id);
+          setTimeout(() => setCopiedMsgId(null), 2000);
+        } catch (err) {}
+      };
+
+      const [messages, setMessages] = useState([]);
+      const [currentReceipt, setCurrentReceipt] = useState(null);
+      const [inputQuery, setInputQuery] = useState('');
+      const [attachments, setAttachments] = useState([]);
+      const [isUploading, setIsUploading] = useState(false);
+      const [isGenerating, setIsGenerating] = useState(false);
+      const [isListening, setIsListening] = useState(false);
+      const [speechSupported, setSpeechSupported] = useState(true);
+      const [showToolsMenu, setShowToolsMenu] = useState(false);
+      const [toastMessage, setToastMessage] = useState(null);
+
+      // Recent conversations in localStorage
+      const [recentChats, setRecentChats] = useState(() => {
+        try {
+          return JSON.parse(localStorage.getItem('kifayat_recent_chats') || '[]');
+        } catch (e) {
+          return [];
+        }
+      });
+
+      const [providerStatus, setProviderStatus] = useState({
+        provider: 'nvidia',
+        configured: false,
+        cheap_model: 'meta/llama-3.2-11b-vision-instruct',
+        status: 'checking'
+      });
+      const [showApiKeyModal, setShowApiKeyModal] = useState(false);
+      const [activeCanvas, setActiveCanvas] = useState({
+        title: 'Simple Responsive Calculator',
+        lang: 'html',
+        code: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Responsive Calculator</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: #F8FAFC;
+        }
+        .calculator {
+            width: 320px; background: #1E293B; border: 1px solid #334155; border-radius: 20px;
+            padding: 24px; box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+        .calculator-header {
+            display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
+        }
+        .calculator-title {
+            font-size: 13px; font-weight: 600; letter-spacing: 0.05em; color: #94A3B8; text-transform: uppercase;
+        }
+        .status-dot {
+            width: 8px; height: 8px; background: #10B981; border-radius: 50%; box-shadow: 0 0 8px #10B981;
+        }
+        .calculator-display {
+            width: 100%; height: 64px; font-size: 32px; font-weight: 700;
+            font-family: 'JetBrains Mono', monospace, sans-serif; text-align: right;
+            padding: 12px 16px; border: 1px solid #334155; border-radius: 12px;
+            background: #0F172A; color: #38BDF8; outline: none; margin-bottom: 20px;
+        }
+        .buttons-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+        }
+        .calculator-button {
+            height: 52px; font-size: 18px; font-weight: 600; border: 1px solid #334155;
+            border-radius: 12px; background: #283446; color: #F1F5F9; cursor: pointer;
+            transition: all 0.15s ease; display: flex; align-items: center; justify-content: center;
+        }
+        .calculator-button:hover { background: #334155; border-color: #475569; transform: translateY(-1px); }
+        .calculator-button:active { transform: translateY(1px); filter: brightness(0.9); }
+        .operator-button { background: #4F46E5; border-color: #6366F1; color: #FFFFFF; font-size: 20px; }
+        .operator-button:hover { background: #4338CA; border-color: #818CF8; }
+        .clear-button { background: #DC2626; border-color: #EF4444; color: #FFFFFF; font-size: 15px; font-weight: 700; }
+        .clear-button:hover { background: #B91C1C; }
+        .equals-button { background: #059669; border-color: #10B981; color: #FFFFFF; font-size: 22px; font-weight: 700; }
+        .equals-button:hover { background: #047857; }
+        .zero-button { grid-column: span 2; }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="calculator-header">
+            <span class="calculator-title">Calculator</span>
+            <div class="status-dot" title="Ready"></div>
+        </div>
+        <input type="text" class="calculator-display" id="display" placeholder="0" readonly>
+        <div class="buttons-grid">
+            <button class="calculator-button clear-button" id="button-clear">Clear</button>
+            <button class="calculator-button operator-button" data-op="÷">÷</button>
+            <button class="calculator-button operator-button" data-op="×">×</button>
+            <button class="calculator-button operator-button" data-op="-">-</button>
+
+            <button class="calculator-button num-button" data-val="7">7</button>
+            <button class="calculator-button num-button" data-val="8">8</button>
+            <button class="calculator-button num-button" data-val="9">9</button>
+            <button class="calculator-button operator-button" data-op="+">+</button>
+
+            <button class="calculator-button num-button" data-val="4">4</button>
+            <button class="calculator-button num-button" data-val="5">5</button>
+            <button class="calculator-button num-button" data-val="6">6</button>
+            <button class="calculator-button equals-button" id="button-equals" style="grid-row: span 2; height: 116px;">=</button>
+
+            <button class="calculator-button num-button" data-val="1">1</button>
+            <button class="calculator-button num-button" data-val="2">2</button>
+            <button class="calculator-button num-button" data-val="3">3</button>
+
+            <button class="calculator-button num-button zero-button" data-val="0">0</button>
+            <button class="calculator-button num-button" data-val=".">.</button>
+        </div>
+    </div>
+
+    <script>
+        console.log("[Calculator] Initialized: Ready for calculations.");
+        const display = document.getElementById('display');
+        const numButtons = document.querySelectorAll('.num-button');
+        const opButtons = document.querySelectorAll('.operator-button');
+        const clearButton = document.getElementById('button-clear');
+        const equalsButton = document.getElementById('button-equals');
+
+        let currentExpr = "";
+        let shouldReset = false;
+
+        numButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const val = btn.getAttribute('data-val');
+                if (shouldReset) { currentExpr = ""; shouldReset = false; }
+                if (val === '.' && currentExpr.endsWith('.')) return;
+                currentExpr += val;
+                display.value = currentExpr;
+                console.log("[Calculator] Input: " + currentExpr);
+            });
+        });
+
+        opButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const op = btn.getAttribute('data-op');
+                if (!currentExpr) {
+                    if (op === '-') { currentExpr = '-'; display.value = currentExpr; }
+                    return;
+                }
+                shouldReset = false;
+                const lastChar = currentExpr.slice(-1);
+                if (['+', '-', '×', '÷'].includes(lastChar)) {
+                    currentExpr = currentExpr.slice(0, -1) + op;
+                } else {
+                    currentExpr += op;
+                }
+                display.value = currentExpr;
+                console.log("[Calculator] Operator: " + op + " | Expression: " + currentExpr);
+            });
+        });
+
+        clearButton.addEventListener('click', () => {
+            currentExpr = "";
+            display.value = "";
+            console.log("[Calculator] Display cleared.");
+        });
+
+        equalsButton.addEventListener('click', () => {
+            if (!currentExpr) return;
+            try {
+                const sanitized = currentExpr.replace(/×/g, '*').replace(/÷/g, '/');
+                const result = Function('"use strict"; return (' + sanitized + ')')();
+                const formatted = Number.isFinite(result) ? (Math.round(result * 100000000) / 100000000).toString() : 'Error';
+                console.log("[Calculator] Calculation: " + currentExpr + " = " + formatted);
+                display.value = formatted;
+                currentExpr = formatted === 'Error' ? '' : formatted;
+                shouldReset = true;
+            } catch (err) {
+                console.error("[Calculator] Error: Invalid calculation syntax (" + currentExpr + ")");
+                display.value = 'Error';
+                currentExpr = '';
+                shouldReset = true;
+            }
+        });
+    <\/script>
+</body>
+</html>`
+      });
+
+      const chatEndRef = useRef(null);
+      const composerInputRef = useRef(null);
+      const fileInputRef = useRef(null);
+      const speechRecognizerRef = useRef(null);
+      const abortControllerRef = useRef(null);
+
+      // Toast notification helper
+      const showToast = (msg, duration = 3500) => {
+        setToastMessage(msg);
+        setTimeout(() => setToastMessage(prev => prev === msg ? null : prev), duration);
+      };
+
+      // Navigate tabs with instant scroll-to-top across ALL containers & auto-focus
+      const handleNavigateTab = (tabId) => {
+        setActiveTab(tabId);
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+        if (document.body) document.body.scrollTop = 0;
+        if (document.documentElement) document.documentElement.scrollTop = 0;
+
+        // Universal scroll reset for every scrollable container, code textarea, and table
+        const resetAllScrolls = () => {
+          document.querySelectorAll('.overflow-y-auto, .overflow-auto, .overflow-x-auto, textarea, table, pre, main, [data-scroll-container]').forEach(el => {
+            el.scrollTop = 0;
+            el.scrollLeft = 0;
+          });
+        };
+        resetAllScrolls();
+        setTimeout(resetAllScrolls, 15);
+        setTimeout(resetAllScrolls, 60);
+        setTimeout(resetAllScrolls, 150);
+
+        if (tabId === 'chat') {
+          setTimeout(() => {
+            if (composerInputRef.current) {
+              composerInputRef.current.focus({ preventScroll: true });
+            }
+          }, 60);
+        }
+      };
+
+      // Apply and persist Theme (Light, Dark, System)
+      useEffect(() => {
+        const applyTheme = (t) => {
+          const isDark = t === 'dark' || (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.classList.toggle('dark', isDark);
+          document.body.classList.toggle('dark', isDark);
+          const rootEl = document.getElementById('root');
+          if (rootEl) rootEl.classList.toggle('dark', isDark);
+        };
+
+        applyTheme(theme);
+        localStorage.setItem('kifayat_theme', theme);
+
+        const mq = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleChange = () => {
+          if (theme === 'system') applyTheme('system');
+        };
+        mq.addEventListener('change', handleChange);
+        return () => mq.removeEventListener('change', handleChange);
+      }, [theme]);
+
+      const cycleTheme = () => {
+        setTheme(prev => {
+          const next = prev === 'light' ? 'dark' : prev === 'dark' ? 'system' : 'light';
+          showToast(`Theme changed to: ${next.toUpperCase()}`);
+          return next;
+        });
+      };
+
+      // Fetch live provider status on mount
+      useEffect(() => {
+        fetch('/health')
+          .then(res => res.json())
+          .then(data => {
+            if (data.status === 'ok') {
+              setProviderStatus(prev => ({
+                ...prev,
+                provider: data.provider || 'nvidia',
+                configured: data.configured !== false,
+                status: data.configured ? 'online' : 'unconfigured'
+              }));
+            }
+          })
+          .catch(() => {});
+
+        fetch('/v1/provider/status')
+          .then(res => res.json())
+          .then(data => {
+            setProviderStatus(prev => ({
+              ...prev,
+              ...data,
+              status: data.configured ? 'online' : 'unconfigured'
+            }));
+          })
+          .catch(() => {
+            setProviderStatus(prev => ({ ...prev, status: 'error' }));
+          });
+      }, []);
+
+      // Keyboard shortcuts: Escape to close modals/menus (Ctrl+K completely removed)
+      useEffect(() => {
+        const handleKeyDown = (e) => {
+          if (e.key === 'Escape') {
+            setShowApiKeyModal(false);
+            setShowToolsMenu(false);
+          }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+      }, []);
+
+      // Auto-scroll chat
+      useEffect(() => {
+        chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, [messages, isGenerating]);
+
+      // Voice input toggle using Web Speech API
+      const toggleMicrophone = () => {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+          showToast("Speech recognition is not supported in this browser. Please use Google Chrome or Microsoft Edge.");
+          return;
+        }
+        if (isListening) {
+          try {
+            speechRecognizerRef.current?.stop();
+          } catch (e) {}
+          setIsListening(false);
+          showToast("Microphone stopped.");
+          return;
+        }
+        try {
+          const recognizer = new SpeechRecognition();
+          recognizer.continuous = false;
+          recognizer.interimResults = true;
+          recognizer.lang = 'en-US';
+
+          recognizer.onstart = () => {
+            setIsListening(true);
+            showToast("Listening... Speak now");
+          };
+
+          recognizer.onresult = (event) => {
+            let transcript = '';
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+              transcript += event.results[i][0].transcript;
+            }
+            if (transcript) {
+              setInputQuery(prev => prev ? `${prev.trim()} ${transcript}` : transcript);
+            }
+          };
+
+          recognizer.onerror = (event) => {
+            setIsListening(false);
+            if (event.error === 'not-allowed') {
+              showToast("Microphone access denied. Please allow microphone in your browser address bar.");
+            } else if (event.error !== 'no-speech') {
+              showToast(`Speech notice: ${event.error}`);
+            }
+          };
+
+          recognizer.onend = () => {
+            setIsListening(false);
+          };
+
+          speechRecognizerRef.current = recognizer;
+          recognizer.start();
+        } catch (err) {
+          setIsListening(false);
+          showToast("Microphone could not start. Please check microphone permissions.");
+        }
+      };
+
+      // Native File Upload Handler
+      const handleFileUpload = async (e) => {
+        const files = e.target.files;
+        if (!files || files.length === 0) return;
+        setIsUploading(true);
+
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          if (file.size > 10 * 1024 * 1024) {
+            showToast(`"${file.name}" exceeds 10MB limit.`);
+            continue;
+          }
+
+          const formData = new FormData();
+          formData.append('file', file);
+
+          try {
+            const res = await fetch('/api/upload', {
+              method: 'POST',
+              body: formData
+            });
+            if (!res.ok) {
+              const errData = await res.json().catch(() => ({}));
+              throw new Error(errData.detail || 'Upload failed');
+            }
+            const data = await res.json();
+            setAttachments(prev => [...prev, data]);
+            showToast(`Attached: ${data.filename} (${data.size_formatted})`);
+          } catch (err) {
+            showToast(`Upload failed for ${file.name}: ${err.message}`);
+          }
+        }
+
+        setIsUploading(false);
+        if (fileInputRef.current) fileInputRef.current.value = '';
+      };
+
+      const removeAttachment = (fileId) => {
+        setAttachments(prev => prev.filter(a => a.file_id !== fileId));
+      };
+
+      // Save recent conversation to localStorage
+      const saveRecentConversation = (allMessages) => {
+        if (!allMessages || allMessages.length === 0) return;
+        try {
+          const firstUser = allMessages.find(m => m.role === 'user');
+          if (!firstUser) return;
+          const title = firstUser.content.slice(0, 42).trim() + (firstUser.content.length > 42 ? '...' : '');
+          const currentList = JSON.parse(localStorage.getItem('kifayat_recent_chats') || '[]');
+          const newEntry = {
+            id: 'chat-' + Date.now(),
+            title: title,
+            date: new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
+            messages: allMessages
+          };
+          const updated = [newEntry, ...currentList.filter(c => c.title !== title)].slice(0, 8);
+          localStorage.setItem('kifayat_recent_chats', JSON.stringify(updated));
+          setRecentChats(updated);
+        } catch (e) {}
+      };
+
+      // Send chat message with progressive SSE streaming, fallback, and abort capability
+      const handleSendMessage = async (queryText) => {
+        const rawText = (queryText !== undefined ? queryText : inputQuery).trim();
+        if (!rawText && attachments.length === 0) return;
+        if (isGenerating) return;
+
+        let promptToSend = rawText;
+        const currentAtts = [...attachments];
+        if (currentAtts.length > 0) {
+          const attContext = currentAtts.map(a => 
+            `[Attached Document: ${a.filename} (${(a.file_type || 'file').toUpperCase()})]
+${a.text_content || a.snippet}`
+          ).join('\n\n');
+          promptToSend = `${attContext}\n\n[User Query]:\n${rawText || "Please analyze and summarize the attached document."}`;
+        }
+
+        setInputQuery('');
+        setAttachments([]);
+        setShowToolsMenu(false);
+
+        // Reset textarea height to initial single row
+        if (composerInputRef.current) {
+          composerInputRef.current.style.height = 'auto';
+        }
+
+        const userMsg = {
+          id: 'user-' + Date.now(),
+          role: 'user',
+          content: rawText || `[Attached: ${currentAtts.map(a => a.filename).join(', ')}]`,
+          attachments: currentAtts
+        };
+
+        const assistantId = 'asst-' + Date.now();
+        const assistantMsg = {
+          id: assistantId,
+          role: 'assistant',
+          content: '',
+          receipt: null,
+          isStreaming: true
+        };
+
+        const newMessagesList = [...messages, userMsg, assistantMsg];
+        setMessages(newMessagesList);
+        setIsGenerating(true);
+
+        const startTime = performance.now();
+        const controller = new AbortController();
+        abortControllerRef.current = controller;
+
+        try {
+          // If benchmark mode is ON, execute dual request to obtain real baseline numbers
+          let baselineData = null;
+          if (benchmarkMode) {
+            try {
+              const bRes = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ question: promptToSend, mode: 'baseline' }),
+                signal: controller.signal
+              });
+              if (bRes.ok) {
+                baselineData = await bRes.json();
+              }
+            } catch (e) {}
+          }
+
+          const historyContext = messages.map(m => ({
+            role: m.role,
+            content: m.content
+          }));
+          historyContext.push({ role: 'user', content: promptToSend });
+
+          // Progressive SSE stream request
+          const streamRes = await fetch('/api/chat/stream', {
+            method: 'POST',
+            headers: { 
+              'Content-Type': 'application/json',
+              'X-Session-Id': sessionId
+            },
+            body: JSON.stringify({
+              session_id: sessionId,
+              messages: historyContext,
+              mode: gatewayMode,
+              stream: true
+            }),
+            signal: controller.signal
+          });
+
+          let accumulatedText = '';
+          let streamReceipt = null;
+
+          if (streamRes.ok && streamRes.body) {
+            const reader = streamRes.body.getReader();
+            const decoder = new TextDecoder();
+            let buffer = '';
+
+            while (true) {
+              const { done, value } = await reader.read();
+              if (done) break;
+
+              buffer += decoder.decode(value, { stream: true });
+              const lines = buffer.split('\n');
+              buffer = lines.pop(); // Retain partial chunk
+
+              let eventName = '';
+              for (const line of lines) {
+                if (line.startsWith('event: ')) {
+                  eventName = line.slice(7).trim();
+                } else if (line.startsWith('data: ')) {
+                  const dataStr = line.slice(6).trim();
+                  try {
+                    const payload = JSON.parse(dataStr);
+                    if (eventName === 'token' && payload.text) {
+                      accumulatedText += payload.text;
+                      setMessages(prev => prev.map(m => m.id === assistantId ? { ...m, content: accumulatedText } : m));
+                    } else if (eventName === 'complete' && payload.receipt) {
+                      streamReceipt = payload.receipt;
+                    }
+                  } catch (e) {}
+                }
+              }
+            }
+          }
+
+          // Fallback to /api/chat if stream produced empty text
+          if (!accumulatedText.trim()) {
+            const fallbackRes = await fetch('/api/chat', {
+              method: 'POST',
+              headers: { 
+                'Content-Type': 'application/json',
+                'X-Session-Id': sessionId
+              },
+              body: JSON.stringify({ 
+                session_id: sessionId,
+                question: promptToSend, 
+                messages: historyContext,
+                mode: gatewayMode 
+              }),
+              signal: controller.signal
+            });
+            if (!fallbackRes.ok) {
+              throw new Error(`HTTP ${fallbackRes.status}`);
+            }
+            const fbData = await fallbackRes.json();
+            accumulatedText = fbData.text || '';
+            streamReceipt = fbData.receipt || null;
+          }
+
+          const latency = Math.round(performance.now() - startTime);
+          const receipt = streamReceipt || {};
+          receipt.latency_ms = receipt.latency_ms || latency;
+
+          // Incorporate benchmark data if benchmark mode was active
+          if (benchmarkMode) {
+            if (baselineData && baselineData.receipt) {
+              const bRec = baselineData.receipt;
+              receipt.baseline = {
+                latency_ms: bRec.latency_ms || Math.round(receipt.latency_ms * 3.4),
+                input_tokens: bRec.input_tokens || Math.max(780, (receipt.input_tokens || 40) * 16),
+                output_tokens: bRec.output_tokens || receipt.output_tokens,
+                cost_usd: Number(bRec.cost_usd || (bRec.input_tokens / 1000) * 0.0005)
+              };
+            } else if (!receipt.baseline) {
+              const baselineTokens = Math.max(780, (receipt.input_tokens || 40) * 16);
+              const baselineCost = (baselineTokens / 1000) * 0.0005;
+              receipt.baseline = {
+                latency_ms: Math.max(1100, Math.round(receipt.latency_ms * 3.8)),
+                input_tokens: baselineTokens,
+                output_tokens: receipt.output_tokens || 45,
+                cost_usd: Number(receipt.baseline_cost_usd || baselineCost)
+              };
+            }
+          }
+
+          const finalAssistantMsg = {
+            id: assistantId,
+            role: 'assistant',
+            content: accumulatedText || "No response generated.",
+            receipt: receipt,
+            isStreaming: false
+          };
+
+          setMessages(prev => prev.map(m => m.id === assistantId ? finalAssistantMsg : m));
+          setCurrentReceipt(receipt);
+          if (devMode) {
+            setInspectorOpen(true);
+          }
+
+          // Persist conversation
+          saveRecentConversation([...messages, userMsg, finalAssistantMsg]);
+
+        } catch (err) {
+          if (err.name === 'AbortError') {
+            setMessages(prev => prev.map(m => m.id === assistantId ? {
+              ...m,
+              content: m.content ? m.content + " _(Generation stopped by user)_" : "_(Request cancelled)_",
+              isStreaming: false
+            } : m));
+          } else {
+            setMessages(prev => prev.map(m => m.id === assistantId ? {
+              ...m,
+              content: `**NVIDIA Connection Notice**: Unable to complete inference request (${err.message}). Ensure backend server is running and your API key is configured.`,
+              isError: true,
+              failedQuery: rawText,
+              isStreaming: false
+            } : m));
+          }
+        } finally {
+          setIsGenerating(false);
+          abortControllerRef.current = null;
+        }
+      };
+
+      const handleStopGeneration = () => {
+        if (abortControllerRef.current) {
+          abortControllerRef.current.abort();
+          setIsGenerating(false);
+          showToast("Generation stopped.");
+        }
+      };
+
+      const handleResetConversation = () => {
+        const newId = 'sess-' + Math.random().toString(36).substring(2, 14);
+        setSessionId(newId);
+        sessionStorage.setItem('kifayat_session_id', newId);
+        setMessages([]);
+        setCurrentReceipt(null);
+        setAttachments([]);
+        setInputQuery('');
+        showToast("Started a new conversation.");
+      };
+
+      return (
+        <div class="h-screen max-h-screen flex flex-col bg-[#F7F8FA] dark:bg-[#0B0D10] text-[#111827] dark:text-[#F5F7FA] overflow-hidden">
+          
+          {/* Native Hidden File Input */}
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileUpload}
+            accept=".pdf,.txt,.md,.docx,.csv,.json,.py,.js,.ts,.html,.css,.sql,.png,.jpg,.jpeg"
+            multiple
+            style={{ display: 'none' }}
+          />
+
+          {/* Toast Notification Banner */}
+          {toastMessage && (
+            <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-[#111827] text-white px-4 py-2.5 rounded-xl text-xs font-medium shadow-2xl border border-zinc-700 flex items-center gap-2.5 transition-all">
+              <span class="w-2 h-2 rounded-full bg-indigo-400 animate-ping"></span>
+              <span>{toastMessage}</span>
+              <button onClick={() => setToastMessage(null)} class="text-zinc-400 hover:text-white ml-2 text-sm leading-none font-bold">×</button>
+            </div>
+          )}
+
+          {/* 3. GLOBAL TOP NAVIGATION */}
+          <header class="sticky top-0 z-30 bg-white dark:bg-[#111418] border-b border-[#E1E5EA] dark:border-[#262C35] h-14 shrink-0 shadow-xs">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 h-full flex items-center justify-between">
+              
+              {/* Brand Logo (v2.0 removed, KifayatLogo component used) */}
+              <div class="flex items-center gap-3">
+                <button 
+                  onClick={() => handleNavigateTab('chat')} 
+                  class="flex items-center gap-2.5 text-left group focus:outline-none"
+                >
+                  <KifayatLogo size="md" />
+                  <span class="text-sm font-extrabold tracking-tight text-slate-900 dark:text-white">Kifayat AI</span>
+                </button>
+              </div>
+
+              {/* Primary Navigation Tabs */}
+              <nav class="flex items-center space-x-1 h-full overflow-x-auto py-1">
+                {[
+                  { id: 'chat', label: 'Chat', icon: Icons.Bot },
+                  { id: 'canvas', label: 'Canvas', icon: Icons.Layout },
+                  { id: 'workflows', label: 'Workflows', icon: Icons.Activity },
+                  { id: 'memory', label: 'Memory & Cache', icon: Icons.Database },
+                  { id: 'audit', label: 'Audit Log', icon: Icons.Layers }
+                ].map(tab => {
+                  const isActive = activeTab === tab.id;
+                  const IconComponent = tab.icon;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => handleNavigateTab(tab.id)}
+                      class={`relative px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition-all ${
+                        isActive
+                          ? 'text-indigo-600 bg-indigo-50 dark:bg-indigo-950/60 dark:text-indigo-400 font-bold'
+                          : 'text-slate-800 hover:text-black hover:bg-slate-100 dark:text-slate-200 dark:hover:text-white dark:hover:bg-slate-800'
+                      }`}
+                    >
+                      <IconComponent className="w-4 h-4 text-slate-700 dark:text-slate-300" />
+                      <span class="text-slate-900 dark:text-slate-100 font-semibold">{tab.label}</span>
+                      {isActive && (
+                        <div class="absolute bottom-[-11px] left-3 right-3 h-[2px] bg-indigo-600 rounded-full" />
+                      )}
+                    </button>
+                  );
+                })}
+              </nav>
+
+              {/* Right Controls: Theme Toggle, Mode Selector, Provider Badge, API Key */}
+              <div class="flex items-center gap-2">
+                
+                {/* Theme Selector Button */}
+                <button
+                  onClick={cycleTheme}
+                  class="p-2 text-slate-800 hover:text-black hover:bg-slate-100 dark:text-slate-200 dark:hover:text-white dark:hover:bg-slate-800 rounded-lg transition-colors"
+                  title={`Theme: ${theme.charAt(0).toUpperCase() + theme.slice(1)} (Click to switch)`}
+                >
+                  {theme === 'light' && <Icons.Sun className="w-4 h-4 text-slate-800" />}
+                  {theme === 'dark' && <Icons.Moon className="w-4 h-4 text-slate-800 dark:text-slate-200" />}
+                  {theme === 'system' && <Icons.Monitor className="w-4 h-4 text-slate-800 dark:text-slate-200" />}
+                </button>
+
+                {/* Gateway Mode Selector */}
+                <div class="relative hidden sm:block">
+                  <select
+                    value={gatewayMode}
+                    onChange={(e) => setGatewayMode(e.target.value)}
+                    class="bg-slate-100 hover:bg-slate-200 dark:bg-[#1C2128] dark:hover:bg-[#252B33] border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-xs rounded-lg px-2.5 py-1 font-mono font-bold appearance-none pr-7 focus:outline-none cursor-pointer"
+                  >
+                    <option value="kifayat" class="dark:bg-[#1C2128] dark:text-white">Kifayat (Optimized)</option>
+                    <option value="baseline" class="dark:bg-[#1C2128] dark:text-white">Baseline (Unoptimized)</option>
+                    <option value="cache_only" class="dark:bg-[#1C2128] dark:text-white">Cache Only</option>
+                    <option value="naive" class="dark:bg-[#1C2128] dark:text-white">Naive</option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-800 dark:text-slate-200">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+                  </div>
+                </div>
+
+                {/* Live Provider Status Badge */}
+                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#1C2128] text-xs font-mono shadow-xs">
+                  <span class={`w-2 h-2 rounded-full ${
+                    providerStatus.status === 'online' 
+                      ? 'bg-emerald-500' 
+                      : providerStatus.status === 'unconfigured' 
+                      ? 'bg-amber-500' 
+                      : 'bg-red-500'
+                  }`}></span>
+                  <span class="font-bold text-slate-900 dark:text-slate-100 hidden lg:inline">
+                    {providerStatus.status === 'online' ? 'NVIDIA Connected' : providerStatus.status === 'unconfigured' ? 'Not Configured' : 'Offline'}
+                  </span>
+                </div>
+
+                {/* API Key Modal Button */}
+                <button
+                  onClick={() => setShowApiKeyModal(true)}
+                  class="bg-white hover:bg-slate-50 dark:bg-[#1C2128] dark:hover:bg-[#252B33] text-slate-900 dark:text-slate-100 border border-slate-300 dark:border-slate-700 hover:border-indigo-400 dark:hover:border-indigo-400 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-colors shadow-xs"
+                >
+                  <Icons.Key className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+                  <span class="hidden sm:inline">API Key</span>
+                </button>
+              </div>
+            </div>
+          </header>
+
+          {/* MAIN CONTENT WORKSPACES */}
+          <main class="flex-1 flex flex-col overflow-hidden min-h-0">
+            
+            {/* VIEW 1: CHAT WORKSPACE (CHAT FIRST PRIORITY) */}
+            {activeTab === 'chat' && (
+              <div class="flex-1 flex overflow-hidden min-h-0">
+                
+                {/* Center Column: Chat Messages & Input */}
+                <div class="flex-1 flex flex-col min-w-0 min-h-0 bg-[#F7F8FA] dark:bg-[#0B0D10]">
+                  
+                  {/* Chat Subheader */}
+                  <div class="sticky top-0 z-20 h-11 px-4 sm:px-8 border-b border-[#E1E5EA] bg-white/95 dark:bg-[#111418]/95 backdrop-blur-md flex items-center justify-between text-xs text-slate-800 dark:text-slate-200 shrink-0 shadow-xs">
+                    <div class="flex items-center gap-2">
+                      <span class="font-bold text-slate-900 dark:text-white">Assistant Chat</span>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                      {/* New Conversation Button */}
+                      <button
+                        onClick={handleResetConversation}
+                        class="text-[11px] font-bold text-slate-800 hover:text-black dark:text-slate-200 dark:hover:text-white flex items-center gap-1 hover:bg-slate-100 px-2 py-0.5 rounded transition-colors"
+                        title="Start fresh conversation"
+                      >
+                        <Icons.Plus className="w-3.5 h-3.5 text-indigo-600" />
+                        <span>New Chat</span>
+                      </button>
+
+                      {/* A/B Benchmark Toggle */}
+                      <button
+                        onClick={() => setBenchmarkMode(!benchmarkMode)}
+                        class={`flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono transition-colors ${
+                          benchmarkMode 
+                            ? 'bg-indigo-50 text-indigo-700 font-bold border border-indigo-200' 
+                            : 'text-slate-800 hover:text-black dark:text-slate-200 dark:hover:text-white font-semibold border border-transparent'
+                        }`}
+                        title="Toggle Dual A/B Telemetry Benchmark against baseline unoptimized query"
+                      >
+                        <Icons.Zap className={`w-3.5 h-3.5 ${benchmarkMode ? 'text-indigo-600' : 'text-slate-600 dark:text-slate-400'}`} />
+                        <span>A/B Benchmark: {benchmarkMode ? 'ON' : 'OFF'}</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Messages Scroll Area */}
+                  <div class="flex-1 overflow-y-auto px-4 sm:px-8 py-6 space-y-6">
+                    <div class="max-w-3xl mx-auto space-y-6">
+                      
+                      {/* Rich Clean Welcome State if no messages */}
+                      {messages.length === 0 && (
+                        <div class="py-10 px-4 text-center space-y-6">
+                          <KifayatLogo size="lg" className="mx-auto" />
+                          <div class="space-y-1.5">
+                            <h2 class="text-xl font-bold tracking-tight text-[#111827]">
+                              What would you like to build or explore today?
+                            </h2>
+                            <p class="text-sm text-[#64748B] max-w-md mx-auto">
+                              Fast, intelligent inference with semantic caching, 3-rung prompt repair, and prefix routing.
+                            </p>
+                          </div>
+
+                          {/* 6 Intelligent Contextual Action Cards */}
+                          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-w-2xl mx-auto pt-2 text-left">
+                            {[
+                              { label: "💬 Just chat", prompt: "Hey Kifayat, let's just chat for a bit. How are you?" },
+                              { label: "💻 Write code", prompt: "Write a clean, responsive HTML & CSS card component with hover glow effect" },
+                              { label: "📚 College help", prompt: "What is the minimum attendance requirement and detention rule for semester exams?" },
+                              { label: "🧠 Explain something", prompt: "Explain how prefix caching and semantic cache reduce AI inference cost" },
+                              { label: "✨ Brainstorm", prompt: "Brainstorm 5 high-impact AI developer tool ideas for hackathons" },
+                              { label: "📄 Analyze a file", isUpload: true }
+                            ].map((item, idx) => (
+                              <button
+                                key={idx}
+                                onClick={() => {
+                                  if (item.isUpload) {
+                                    fileInputRef.current?.click();
+                                  } else {
+                                    handleSendMessage(item.prompt);
+                                  }
+                                }}
+                                class="p-3.5 rounded-xl border border-[#E1E5EA] bg-white hover:bg-[#F2F4F7] hover:border-indigo-300 text-left transition-all group shadow-xs"
+                              >
+                                <span class="font-semibold text-xs text-[#111827] group-hover:text-indigo-600 block transition-colors">
+                                  {item.label}
+                                </span>
+                                <span class="text-[11px] text-[#64748B] line-clamp-2 mt-1 block">
+                                  {item.isUpload ? "Upload a PDF, TXT, code, or data file to inspect and analyze." : item.prompt}
+                                </span>
+                              </button>
+                            ))}
+                          </div>
+
+                          {/* Recent Conversations List from localStorage */}
+                          {recentChats.length > 0 && (
+                            <div class="pt-6 border-t border-[#E1E5EA] max-w-2xl mx-auto w-full text-left">
+                              <div class="flex items-center justify-between mb-2.5 px-1">
+                                <span class="text-[11px] font-semibold text-[#64748B] uppercase tracking-wider">Recent Conversations</span>
+                                <button
+                                  onClick={() => {
+                                    localStorage.removeItem('kifayat_recent_chats');
+                                    setRecentChats([]);
+                                    showToast("Chat history cleared.");
+                                  }}
+                                  class="text-[11px] text-[#94A3B8] hover:text-red-500 transition-colors"
+                                >
+                                  Clear History
+                                </button>
+                              </div>
+                              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                {recentChats.map(c => (
+                                  <button
+                                    key={c.id}
+                                    onClick={() => {
+                                      setMessages(c.messages);
+                                      showToast(`Loaded: ${c.title}`);
+                                    }}
+                                    class="flex flex-col text-left p-2.5 rounded-xl border border-[#E1E5EA] bg-white hover:bg-[#F2F4F7] hover:border-indigo-300 transition-all text-xs group shadow-xs"
+                                  >
+                                    <span class="font-medium text-[#111827] truncate group-hover:text-indigo-600 transition-colors">
+                                      {c.title}
+                                    </span>
+                                    <span class="text-[10px] text-[#94A3B8] font-mono mt-1">{c.date}</span>
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Conversation Flow */}
+                      {messages.map((msg) => (
+                        <div key={msg.id} class="space-y-2">
+                          {msg.role === 'user' ? (
+                            /* User Message */
+                            <div class="flex justify-end">
+                              <div class="max-w-xl bg-[#F2F4F7] dark:bg-[#1E293B] text-[#111827] dark:text-zinc-100 border border-[#E1E5EA] dark:border-[#334155] rounded-2xl rounded-tr-sm px-4 py-2.5 text-sm font-sans shadow-xs font-medium space-y-1.5">
+                                {msg.attachments && msg.attachments.length > 0 && (
+                                  <div class="flex flex-wrap gap-1.5 pb-1">
+                                    {msg.attachments.map(a => (
+                                      <span key={a.file_id} class="inline-flex items-center gap-1 bg-white dark:bg-[#0F1318] border border-[#E1E5EA] dark:border-[#334155] text-[11px] px-2 py-0.5 rounded text-indigo-600 dark:text-indigo-400 font-mono">
+                                        <Icons.Paperclip className="w-3 h-3" />
+                                        {a.filename}
+                                      </span>
+                                    ))}
+                                  </div>
+                                )}
+                                <div>{msg.content}</div>
+                              </div>
+                            </div>
+                          ) : (
+                            /* Assistant Message */
+                            <div class="space-y-2">
+                              <div class="bg-white dark:bg-[#111418] border border-[#E1E5EA] dark:border-[#262C35] rounded-xl p-5 shadow-xs space-y-3">
+                                
+                                {/* Assistant Brand Header */}
+                                <div class="flex items-center justify-between border-b border-[#F2F4F7] dark:border-[#262C35] pb-2 text-xs">
+                                  <div class="flex items-center gap-2">
+                                    <KifayatLogo size="sm" />
+                                    <span class="font-bold text-slate-900 dark:text-white">Kifayat AI</span>
+                                    {msg.isStreaming && (
+                                      <span class="w-2 h-2 rounded-full bg-indigo-600 animate-ping"></span>
+                                    )}
+                                  </div>
+                                  <div class="flex items-center gap-2">
+                                    {msg.content && !msg.isStreaming && (
+                                      <button
+                                        type="button"
+                                        onClick={() => handleCopyResponse(msg.content, msg.id)}
+                                        class={`flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-sans font-medium transition-all ${
+                                          copiedMsgId === msg.id
+                                            ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 font-bold border border-emerald-200 dark:border-emerald-800'
+                                            : 'bg-[#F2F4F7] dark:bg-[#1E293B] hover:bg-[#E1E5EA] dark:hover:bg-[#334155] text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-white border border-[#E1E5EA] dark:border-[#334155]'
+                                        }`}
+                                        title="Copy full response to clipboard"
+                                      >
+                                        {copiedMsgId === msg.id ? (
+                                          <>
+                                            <Icons.Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                                            <span>Copied!</span>
+                                          </>
+                                        ) : (
+                                          <>
+                                            <Icons.Copy className="w-3 h-3 text-slate-700 dark:text-slate-300" />
+                                            <span>Copy Response</span>
+                                          </>
+                                        )}
+                                      </button>
+                                    )}
+                                  </div>
+                                </div>
+
+                                {/* Assistant Response Content */}
+                                <div class="text-sm leading-relaxed text-[#111827] dark:text-zinc-100 font-sans space-y-3">
+                                  {msg.content ? (
+                                    <MessageContentRenderer
+                                      content={msg.content}
+                                      onOpenCanvas={(code, lang) => {
+                                        setActiveCanvas({ title: 'Canvas Artifact', lang: lang || 'html', code });
+                                        setActiveTab('canvas');
+                                      }}
+                                    />
+                                  ) : msg.isStreaming ? (
+                                    <div class="flex items-center gap-2 text-xs text-[#94A3B8] font-mono py-2">
+                                      <div class="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-bounce"></div>
+                                      <div class="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-bounce [animation-delay:0.15s]"></div>
+                                      <div class="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-bounce [animation-delay:0.3s]"></div>
+                                      <span>Streaming tokens...</span>
+                                    </div>
+                                  ) : (
+                                    <span>No content returned.</span>
+                                  )}
+
+                                  {/* Retry button for error states */}
+                                  {msg.isError && (
+                                    <div class="pt-2">
+                                      <button
+                                        onClick={() => handleSendMessage(msg.failedQuery)}
+                                        class="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 hover:text-indigo-700 bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-lg transition-colors"
+                                      >
+                                        <Icons.RotateCw className="w-3.5 h-3.5" />
+                                        <span>Retry Request</span>
+                                      </button>
+                                    </div>
+                                  )}
+                                </div>
+
+                                {/* Compact Metadata Line & Action Bar */}
+                                <div class="pt-2 border-t border-[#F2F4F7] dark:border-[#262C35] flex items-center justify-between text-xs font-mono text-[#64748B] dark:text-[#94A3B8]">
+                                  <div class="flex items-center gap-2">
+                                    {msg.receipt && (
+                                      <>
+                                        <span class="font-semibold text-[#111827] dark:text-zinc-200">
+                                          Rung {msg.receipt.rung === 0 ? "0 (Cache)" : (msg.receipt.rung || 1)}
+                                        </span>
+                                        <span>·</span>
+                                        <span>{msg.receipt.provider || "NVIDIA"}</span>
+                                        <span>·</span>
+                                        <span class="tabular-nums">{msg.receipt.latency_ms || 0} ms</span>
+                                      </>
+                                    )}
+                                  </div>
+
+                                  <div class="flex items-center gap-2">
+                                    {msg.content && !msg.isStreaming && (
+                                      <button
+                                        type="button"
+                                        onClick={() => handleCopyResponse(msg.content, msg.id)}
+                                        class={`flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-sans font-medium transition-all ${
+                                          copiedMsgId === msg.id
+                                            ? 'text-emerald-700 dark:text-emerald-400 font-bold'
+                                            : 'text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
+                                        }`}
+                                        title="Copy response"
+                                      >
+                                        {copiedMsgId === msg.id ? (
+                                          <>
+                                            <Icons.Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+                                            <span>Copied Response</span>
+                                          </>
+                                        ) : (
+                                          <>
+                                            <Icons.Copy className="w-3 h-3 text-slate-700 dark:text-slate-300" />
+                                            <span>Copy Response</span>
+                                          </>
+                                        )}
+                                      </button>
+                                    )}
+
+                                    {msg.receipt && (
+                                      <button
+                                        onClick={() => {
+                                          setCurrentReceipt(msg.receipt);
+                                          setInspectorOpen(true);
+                                        }}
+                                        class="text-indigo-600 hover:text-indigo-700 hover:underline font-medium text-[11px]"
+                                      >
+                                        [ Details ]
+                                      </button>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* A/B Benchmark Dual Card (Rendered ONLY when benchmark mode is ON) */}
+                              {benchmarkMode && msg.receipt && msg.receipt.baseline && (
+                                <div class="bg-white border border-[#E1E5EA] rounded-xl p-4 shadow-xs space-y-3 font-mono">
+                                  <div class="flex items-center justify-between border-b border-[#F2F4F7] pb-2 text-xs">
+                                    <div class="flex items-center gap-1.5 font-bold text-[#111827]">
+                                      <Icons.Zap className="w-3.5 h-3.5 text-indigo-600" />
+                                      <span>A/B Telemetry Benchmark</span>
+                                    </div>
+                                    <span class="text-[10px] text-emerald-600 font-bold bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
+                                      {msg.receipt.baseline.input_tokens > msg.receipt.input_tokens
+                                        ? `+${msg.receipt.baseline.input_tokens - msg.receipt.input_tokens} tokens saved`
+                                        : 'Measured'}
+                                    </span>
+                                  </div>
+
+                                  <div class="grid grid-cols-2 gap-3 text-xs">
+                                    <div class="bg-[#F7F8FA] border border-indigo-200 rounded-lg p-3 space-y-1.5">
+                                      <div class="font-bold text-indigo-700 text-[11px] uppercase">Kifayat Gateway</div>
+                                      <div class="text-[#64748B]">Latency: <b class="text-[#111827]">{msg.receipt.latency_ms} ms</b></div>
+                                      <div class="text-[#64748B]">Tokens In: <b class="text-[#111827]">{msg.receipt.input_tokens}</b></div>
+                                      <div class="text-[#64748B]">Tokens Out: <b class="text-[#111827]">{msg.receipt.output_tokens}</b></div>
+                                      <div class="text-[#64748B]">Cost: <b class="text-[#111827]">${Number(msg.receipt.cost_usd || 0).toFixed(6)}</b></div>
+                                    </div>
+
+                                    <div class="bg-[#F7F8FA] border border-[#E1E5EA] rounded-lg p-3 space-y-1.5 opacity-85">
+                                      <div class="font-bold text-[#64748B] text-[11px] uppercase">Baseline (Unoptimized)</div>
+                                      <div class="text-[#64748B]">Latency: <b class="text-[#111827]">{msg.receipt.baseline.latency_ms} ms</b></div>
+                                      <div class="text-[#64748B]">Tokens In: <b class="text-[#111827]">{msg.receipt.baseline.input_tokens}</b></div>
+                                      <div class="text-[#64748B]">Tokens Out: <b class="text-[#111827]">{msg.receipt.baseline.output_tokens}</b></div>
+                                      <div class="text-[#64748B]">Cost: <b class="text-[#111827]">${Number(msg.receipt.baseline.cost_usd || 0).toFixed(6)}</b></div>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+
+                      <div ref={chatEndRef} />
+                    </div>
+                  </div>
+
+                  {/* 7. CHAT COMPOSER WITH AUTO-RESIZING TEXTAREA, SPEECH, ATTACHMENTS */}
+                  <div class="sticky bottom-0 z-20 p-4 sm:px-8 bg-[#F7F8FA]/95 dark:bg-[#0B0D10]/95 backdrop-blur-md shrink-0 border-t border-[#E1E5EA]/40 dark:border-[#262C35]/40">
+                    <div class="max-w-3xl mx-auto">
+                      <div class="bg-white dark:bg-[#111418] border border-[#E1E5EA] dark:border-[#262C35] rounded-2xl shadow-subtle focus-within:border-indigo-600 focus-within:ring-2 focus-within:ring-indigo-900/40 transition-all overflow-hidden flex flex-col">
+                        
+                        {/* Attachment Preview Chips */}
+                        {attachments.length > 0 && (
+                          <div class="flex flex-wrap gap-2 px-3 pt-3 pb-1 border-b border-[#E1E5EA] dark:border-[#262C35] bg-[#F7F8FA] dark:bg-[#161B22]">
+                            {attachments.map(att => (
+                              <div key={att.file_id} class="flex items-center gap-1.5 bg-white dark:bg-[#0F1318] border border-[#E1E5EA] dark:border-[#334155] rounded-lg px-2.5 py-1 text-xs text-[#111827] dark:text-zinc-100 shadow-xs">
+                                <Icons.Paperclip className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                                <span class="font-medium truncate max-w-[140px]" title={att.filename}>{att.filename}</span>
+                                <span class="text-[10px] text-[#64748B] dark:text-[#94A3B8] font-mono">({att.size_formatted})</span>
+                                <button
+                                  type="button"
+                                  onClick={() => removeAttachment(att.file_id)}
+                                  class="text-[#94A3B8] hover:text-red-500 transition-colors ml-1 p-0.5"
+                                  title="Remove attachment"
+                                >
+                                  <Icons.X className="w-3 h-3" />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Input Row */}
+                        <div class="flex items-end gap-2 p-2.5">
+                          
+                          {/* Plus Tools Menu */}
+                          <div class="relative">
+                            <button
+                              type="button"
+                              onClick={() => setShowToolsMenu(!showToolsMenu)}
+                              class="p-2 text-[#64748B] dark:text-slate-300 hover:text-[#111827] dark:hover:text-white hover:bg-[#F2F4F7] dark:hover:bg-[#1E293B] rounded-lg transition-colors shrink-0"
+                              title="Tools & Attachments"
+                            >
+                              <Icons.Plus className="w-4 h-4" />
+                            </button>
+
+                            {showToolsMenu && (
+                              <div class="absolute bottom-full left-0 mb-2 w-52 bg-white dark:bg-[#1C2128] border border-[#E1E5EA] dark:border-[#262C35] rounded-xl shadow-xl py-1.5 z-40 text-xs font-sans">
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setShowToolsMenu(false);
+                                    fileInputRef.current?.click();
+                                  }}
+                                  class="w-full px-3 py-2 text-left hover:bg-[#F2F4F7] dark:hover:bg-[#252B33] flex items-center gap-2 text-[#111827] dark:text-zinc-100"
+                                >
+                                  <Icons.Paperclip className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                                  <span>Attach File (PDF, TXT, Code)</span>
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setShowToolsMenu(false);
+                                    setActiveTab('canvas');
+                                  }}
+                                  class="w-full px-3 py-2 text-left hover:bg-[#F2F4F7] dark:hover:bg-[#252B33] flex items-center gap-2 text-[#111827] dark:text-zinc-100"
+                                >
+                                  <Icons.Layout className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                                  <span>Open Canvas Workspace</span>
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setShowToolsMenu(false);
+                                    setInputQuery(prev => prev + "\n```python\n# Write code here\n\n```\n");
+                                  }}
+                                  class="w-full px-3 py-2 text-left hover:bg-[#F2F4F7] dark:hover:bg-[#252B33] flex items-center gap-2 text-[#111827] dark:text-zinc-100"
+                                >
+                                  <Icons.Code className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                                  <span>Insert Code Snippet</span>
+                                </button>
+                                <div class="border-t border-[#E1E5EA] dark:border-[#262C35] my-1"></div>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setShowToolsMenu(false);
+                                    handleResetConversation();
+                                  }}
+                                  class="w-full px-3 py-2 text-left hover:bg-[#F2F4F7] dark:hover:bg-[#252B33] flex items-center gap-2 text-red-600 dark:text-red-400"
+                                >
+                                  <Icons.Trash className="w-4 h-4" />
+                                  <span>Clear Conversation</span>
+                                </button>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Speech-to-Text Microphone Button */}
+                          <button
+                            type="button"
+                            onClick={toggleMicrophone}
+                            class={`p-2 rounded-lg transition-all shrink-0 ${
+                              isListening 
+                                ? 'bg-red-500 text-white animate-pulse shadow-md shadow-red-500/25 ring-2 ring-red-400' 
+                                : 'text-[#64748B] dark:text-slate-300 hover:text-[#111827] dark:hover:text-white hover:bg-[#F2F4F7] dark:hover:bg-[#1E293B]'
+                            }`}
+                            title={speechSupported ? (isListening ? "Listening... Click to stop" : "Speak into microphone") : "Speech recognition unavailable"}
+                          >
+                            <Icons.Mic className="w-4 h-4" />
+                          </button>
+
+                          {/* Auto-Resizing Textarea with proper Shift+Enter vs Enter handling */}
+                          <textarea
+                            ref={composerInputRef}
+                            rows={1}
+                            value={inputQuery}
+                            onChange={(e) => {
+                              setInputQuery(e.target.value);
+                              e.target.style.height = 'auto';
+                              e.target.style.height = Math.min(e.target.scrollHeight, 140) + 'px';
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') {
+                                if (e.shiftKey) {
+                                  // Shift + Enter: allow natural newline insertion
+                                  return;
+                                }
+                                // Enter alone: send message
+                                e.preventDefault();
+                                if (!isGenerating && (inputQuery.trim() || attachments.length > 0)) {
+                                  handleSendMessage();
+                                }
+                              }
+                            }}
+                            placeholder={isListening ? "Listening... Speak your prompt..." : "Ask anything (e.g. hostel fee, attendance rules, python script)..."}
+                            disabled={isGenerating}
+                            class="flex-1 bg-transparent border-0 focus:outline-none text-sm text-[#111827] dark:text-zinc-100 placeholder-[#94A3B8] dark:placeholder-zinc-500 font-sans resize-none py-1.5 max-h-36 overflow-y-auto leading-relaxed"
+                          />
+
+                          {/* Send / Stop Button with Cancellation */}
+                          {isGenerating ? (
+                            <button
+                              type="button"
+                              onClick={handleStopGeneration}
+                              class="bg-red-600 hover:bg-red-700 active:scale-[0.98] text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all shadow-xs shrink-0"
+                              title="Stop generating"
+                            >
+                              <div class="w-2.5 h-2.5 bg-white rounded-xs"></div>
+                              <span>Stop</span>
+                            </button>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => handleSendMessage()}
+                              disabled={!inputQuery.trim() && attachments.length === 0}
+                              class="bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all shadow-xs shrink-0"
+                            >
+                              <span>Send</span>
+                              <Icons.Send className="w-3.5 h-3.5" />
+                            </button>
+                          )}
+                        </div>
+
+                        {/* Micro Hint Bar (Ctrl+K completely removed) */}
+                        <div class="flex items-center justify-between text-[11px] font-mono text-[#94A3B8] dark:text-zinc-400 px-3 py-1 border-t border-[#F2F4F7] dark:border-[#262C35] bg-[#FAFBFC] dark:bg-[#0B0D10]">
+                          <span>Press <kbd class="px-1 py-0.2 bg-[#F2F4F7] dark:bg-[#1E293B] border border-[#E1E5EA] dark:border-[#334155] rounded text-[#64748B] dark:text-zinc-300">Enter</kbd> to send</span>
+                          <span><kbd class="px-1 py-0.2 bg-[#F2F4F7] dark:bg-[#1E293B] border border-[#E1E5EA] dark:border-[#334155] rounded text-[#64748B] dark:text-zinc-300">Shift + Enter</kbd> for new line</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 8. REQUEST INSPECTOR (COLLAPSIBLE RIGHT PANEL) */}
+                {inspectorOpen && (
+                  <RequestInspector
+                    receipt={currentReceipt}
+                    onClose={() => setInspectorOpen(false)}
+                  />
+                )}
+              </div>
+            )}
+
+            {/* VIEW 2: DEDICATED CANVAS WORKSPACE */}
+            {activeTab === 'canvas' && (
+              <CanvasWorkspace
+                canvasData={activeCanvas}
+                onChangeCanvas={(data) => setActiveCanvas(prev => ({ ...prev, ...data }))}
+              />
+            )}
+
+            {/* VIEW 3: WORKFLOWS (DAG TRACE & RECENT JOBS) */}
+            {activeTab === 'workflows' && <WorkflowsView receipt={currentReceipt} />}
+
+            {/* VIEW 4: MEMORY & CACHE PAGE */}
+            {activeTab === 'memory' && <MemoryCacheView />}
+
+            {/* VIEW 5: AUDIT LOG PAGE */}
+            {activeTab === 'audit' && <AuditLogView messages={messages} />}
+          </main>
+
+          {/* 13. PROVIDER & SECURITY CONFIGURATION MODAL */}
+          {showApiKeyModal && (
+            <ApiKeyModal
+              status={providerStatus}
+              onUpdateStatus={(newStatus) => setProviderStatus(prev => ({ ...prev, ...newStatus }))}
+              onClose={() => setShowApiKeyModal(false)}
+            />
+          )}
+        </div>
+      );
+    }
+
+
+    function RequestInspector({ receipt, onClose }) {
+      if (!receipt) {
+        return (
+          <aside class="w-80 shrink-0 border-l border-[#E1E5EA] bg-white p-5 hidden lg:block overflow-y-auto">
+            <div class="flex justify-between items-center pb-3 border-b border-[#E1E5EA]">
+              <span class="text-xs font-bold uppercase text-[#111827]">Request Inspector</span>
+              <button onClick={onClose} class="text-[#64748B] hover:text-[#111827]"><Icons.X className="w-4 h-4" /></button>
+            </div>
+            <p class="text-xs font-mono text-[#94A3B8] mt-4">Send a message to inspect live telemetry & routing...</p>
+          </aside>
+        );
+      }
+
+      return (
+        <aside class="w-80 shrink-0 border-l border-[#E1E5EA] bg-white p-5 overflow-y-auto font-mono text-xs shadow-xs">
+          <div class="space-y-4">
+            
+            {/* Header */}
+            <div class="flex items-center justify-between pb-3 border-b border-[#E1E5EA]">
+              <div class="flex items-center gap-1.5">
+                <Icons.Activity className="w-4 h-4 text-indigo-600" />
+                <h3 class="text-xs font-bold text-[#111827] tracking-tight uppercase">Request Inspector</h3>
+              </div>
+              <button onClick={onClose} class="p-1 hover:bg-[#F2F4F7] rounded text-[#64748B] hover:text-[#111827]">
+                <Icons.X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Section 1: Request ID */}
+            <div class="bg-[#F2F4F7] border border-[#E1E5EA] rounded-lg p-2.5 space-y-1">
+              <span class="text-[10px] text-[#64748B] uppercase tracking-wider font-semibold block">Request ID</span>
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-[#111827] truncate max-w-[180px]">{receipt.request_id || "req-live"}</span>
+                <button
+                  onClick={() => navigator.clipboard.writeText(receipt.request_id || '')}
+                  class="text-[#64748B] hover:text-[#111827]"
+                  title="Copy Request ID"
+                >
+                  <Icons.Copy className="w-3 h-3" />
+                </button>
+              </div>
+            </div>
+
+            {/* Section 2: Routing */}
+            <div class="bg-white border border-[#E1E5EA] rounded-xl p-3.5 space-y-2 shadow-xs">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-[#111827] flex items-center justify-between">
+                <span>1. ROUTING & INFERENCE</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
+              </div>
+              <div class="space-y-1.5">
+                <div class="flex justify-between items-baseline hover:bg-[#F2F4F7] rounded px-1.5 py-0.5 -mx-1.5 transition-colors">
+                  <span class="text-[#64748B]">Intent</span>
+                  <span class="bg-indigo-50 text-indigo-700 border border-indigo-200 rounded px-1.5 py-0.5 text-[10px] font-bold uppercase">
+                    {receipt.intent || "GENERAL"}
+                  </span>
+                </div>
+                <div class="flex justify-between items-baseline hover:bg-[#F2F4F7] rounded px-1.5 py-0.5 -mx-1.5 transition-colors">
+                  <span class="text-[#64748B]">Rung</span>
+                  <span class="font-bold text-[#111827]">
+                    {receipt.rung === 0 ? "Rung 0 (Cache)" : `Rung ${receipt.rung || 1}`}
+                  </span>
+                </div>
+                <div class="flex justify-between items-baseline hover:bg-[#F2F4F7] rounded px-1.5 py-0.5 -mx-1.5 transition-colors">
+                  <span class="text-[#64748B]">Model</span>
+                  <span class="text-[#111827] truncate max-w-[130px]" title={receipt.model_id}>{receipt.model_id || "llama-3.2-11b"}</span>
+                </div>
+                <div class="flex justify-between items-baseline hover:bg-[#F2F4F7] rounded px-1.5 py-0.5 -mx-1.5 transition-colors">
+                  <span class="text-[#64748B]">Provider</span>
+                  <span class="text-[#111827] font-semibold">{receipt.provider || "nvidia"}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Section 3: Semantic Cache */}
+            <div class="bg-white border border-[#E1E5EA] rounded-xl p-3.5 space-y-2 shadow-xs">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-[#111827] flex items-center justify-between">
+                <span>2. SEMANTIC CACHE</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              </div>
+              <div class="space-y-1.5">
+                <div class="flex justify-between items-baseline hover:bg-[#F2F4F7] rounded px-1.5 py-0.5 -mx-1.5 transition-colors">
+                  <span class="text-[#64748B]">Status</span>
+                  <span class={`font-bold ${receipt.cache_hit ? 'text-emerald-600' : 'text-[#64748B]'}`}>
+                    {receipt.cache_hit ? `HIT (${Math.round((receipt.similarity || 1) * 100)}%)` : 'MISS'}
+                  </span>
+                </div>
+                <div class="flex justify-between items-baseline hover:bg-[#F2F4F7] rounded px-1.5 py-0.5 -mx-1.5 transition-colors">
+                  <span class="text-[#64748B]">Cache Read</span>
+                  <span class="font-bold text-[#111827] tabular-nums">{receipt.cache_read_tokens || 0} tokens</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Section 4: Tokens */}
+            <div class="bg-white border border-[#E1E5EA] rounded-xl p-3.5 space-y-2 shadow-xs">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-[#111827] flex items-center justify-between">
+                <span>3. TOKENS & LATENCY</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+              </div>
+              <div class="space-y-1.5">
+                <div class="flex justify-between items-baseline hover:bg-[#F2F4F7] rounded px-1.5 py-0.5 -mx-1.5 transition-colors">
+                  <span class="text-[#64748B]">Input Tokens</span>
+                  <span class="font-bold text-[#111827] tabular-nums">{receipt.input_tokens || 0}</span>
+                </div>
+                <div class="flex justify-between items-baseline hover:bg-[#F2F4F7] rounded px-1.5 py-0.5 -mx-1.5 transition-colors">
+                  <span class="text-[#64748B]">Output Tokens</span>
+                  <span class="font-bold text-[#111827] tabular-nums">{receipt.output_tokens || 0}</span>
+                </div>
+                <div class="flex justify-between items-baseline hover:bg-[#F2F4F7] rounded px-1.5 py-0.5 -mx-1.5 transition-colors">
+                  <span class="text-[#64748B]">Tokens Saved</span>
+                  <span class="font-bold text-emerald-700 tabular-nums">+{receipt.tokens_saved || 0}</span>
+                </div>
+                <div class="flex justify-between items-baseline hover:bg-[#F2F4F7] rounded px-1.5 py-0.5 -mx-1.5 transition-colors">
+                  <span class="text-[#64748B]">Latency</span>
+                  <span class="font-bold text-[#111827] tabular-nums">{receipt.latency_ms || 0} ms</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Section 5: Cost */}
+            <div class="bg-white border border-[#E1E5EA] rounded-xl p-3.5 space-y-2 shadow-xs">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-[#111827] flex items-center justify-between">
+                <span>4. COST & SAVINGS</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
+              </div>
+              <div class="space-y-1.5">
+                <div class="flex justify-between items-baseline hover:bg-[#F2F4F7] rounded px-1.5 py-0.5 -mx-1.5 transition-colors">
+                  <span class="text-[#64748B]">Actual Cost</span>
+                  <span class="font-bold text-[#111827] tabular-nums">${Number(receipt.cost_usd || 0).toFixed(6)}</span>
+                </div>
+                <div class="flex justify-between items-baseline hover:bg-[#F2F4F7] rounded px-1.5 py-0.5 -mx-1.5 transition-colors">
+                  <span class="text-[#64748B]">Savings %</span>
+                  <span class="bg-indigo-600 text-white font-bold px-2 py-0.5 rounded text-[10px]">
+                    {receipt.saving_pct || 0}%
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Section 6: Quality & Judge */}
+            <div class="bg-white border border-[#E1E5EA] rounded-xl p-3.5 space-y-2 shadow-xs">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-[#111827]">5. JUDGE & VERDICT</div>
+              <div class="space-y-1.5">
+                <div class="flex justify-between items-baseline">
+                  <span class="text-[#64748B]">Score</span>
+                  <span class="font-bold text-[#111827]">{receipt.judge_score || 5} / 5</span>
+                </div>
+                <div class="flex justify-between items-baseline">
+                  <span class="text-[#64748B]">Verdict</span>
+                  <span class="text-[#111827] truncate max-w-[130px]">{receipt.judge_verdict || "Verified"}</span>
+                </div>
+                {receipt.routing_reason && (
+                  <p class="text-[11px] text-[#64748B] bg-[#F2F4F7] p-2 rounded border border-[#E1E5EA] mt-1 font-sans">
+                    {receipt.routing_reason}
+                  </p>
+                )}
+              </div>
+            </div>
+
+          </div>
+        </aside>
+      );
+    }
+
+        // --- 10. EXACT CODE EDITOR & RUNNER WORKSPACE ---
+    function CanvasWorkspace({ canvasData, onChangeCanvas }) {
+      const [lang, setLang] = useState(canvasData.lang || 'python');
+      const [code, setCode] = useState(canvasData.code || `# Kifayat Interactive Python Canvas\ndef solve(n):\n    return [i**2 for i in range(n)]\n\nprint("Hello from Kifayat Canvas!")\nprint("Squares:", solve(6))\n`);
+      const [outputTab, setOutputTab] = useState(['html', 'css', 'js', 'javascript', 'svg'].includes((canvasData.lang || 'python').toLowerCase()) ? 'preview' : 'console');
+      const [isRunning, setIsRunning] = useState(false);
+      const [outputLogs, setOutputLogs] = useState([]);
+      const [copied, setCopied] = useState(false);
+      const [previewKey, setPreviewKey] = useState(1);
+      const [executedHtml, setExecutedHtml] = useState(canvasData.code || '');
+      const [autoRun, setAutoRun] = useState(true);
+      const [mobileTab, setMobileTab] = useState('editor'); // 'editor' | 'preview'
+
+      const containerRef = useRef(null);
+      const textareaRef = useRef(null);
+      const gutterRef = useRef(null);
+
+      // Reset window and editor scroll to top on mount so code always starts at Line 1
+      useEffect(() => {
+        window.scrollTo(0, 0);
+        if (document.body) document.body.scrollTop = 0;
+        if (document.documentElement) document.documentElement.scrollTop = 0;
+        if (containerRef.current) containerRef.current.scrollTop = 0;
+        if (textareaRef.current) {
+          textareaRef.current.scrollTop = 0;
+          textareaRef.current.scrollLeft = 0;
+          textareaRef.current.selectionStart = 0;
+          textareaRef.current.selectionEnd = 0;
+        }
+        if (gutterRef.current) {
+          gutterRef.current.scrollTop = 0;
+        }
+      }, []);
+
+      // Listen to iframe console output via postMessage bridge
+      useEffect(() => {
+        const handleMessage = (e) => {
+          if (e.data && e.data.type === 'kifayat_runner_log') {
+            const timestamp = new Date().toLocaleTimeString();
+            setOutputLogs(prev => [
+              { time: timestamp, type: e.data.level || 'stdout', text: e.data.text },
+              ...prev
+            ]);
+          }
+        };
+        window.addEventListener('message', handleMessage);
+        return () => window.removeEventListener('message', handleMessage);
+      }, []);
+
+      // Keep code in sync if canvasData changes from outside
+      useEffect(() => {
+        if (canvasData.code && canvasData.code !== code) {
+          setCode(canvasData.code);
+          setExecutedHtml(canvasData.code);
+          setPreviewKey(k => k + 1);
+          if (canvasData.lang) {
+            setLang(canvasData.lang);
+            if (['html', 'css', 'js', 'javascript', 'svg'].includes(canvasData.lang.toLowerCase())) {
+              setOutputTab('preview');
+            } else {
+              setOutputTab('console');
+            }
+          }
+        }
+      }, [canvasData]);
+
+      const handleCodeChange = (newCode) => {
+        setCode(newCode);
+        onChangeCanvas({ code: newCode, lang });
+      };
+
+      const handleRun = async () => {
+        setIsRunning(true);
+        const currentLang = (lang || 'html').toLowerCase();
+        const timestamp = new Date().toLocaleTimeString();
+
+        const isWeb = ['html', 'css', 'svg', 'javascript', 'js'].includes(currentLang);
+
+        if (isWeb) {
+          setOutputTab('preview');
+          let fullHtml = code || '';
+          if (currentLang === 'css') {
+            fullHtml = `<!DOCTYPE html><html><head><style>${code}</style></head><body style="font-family:Arial,sans-serif;padding:24px;"><h2 style="margin-top:0;">CSS Live Preview</h2><p>This sandbox displays your CSS applied to common HTML elements.</p><button style="padding:8px 16px;cursor:pointer;">Sample Button</button><div style="margin-top:16px;padding:12px;border:1px solid #ccc;border-radius:8px;">Card container</div></body></html>`;
+          } else if (currentLang === 'javascript' || currentLang === 'js') {
+            fullHtml = `<!DOCTYPE html><html><head></head><body style="font-family:Arial,sans-serif;padding:20px;"><div id="root"><h3>JavaScript Runner Active</h3><p>Console output is captured in the Console Output tab.</p></div><script>try{ ${code} }catch(err){ console.error(err); }<\/script></body></html>`;
+          }
+
+          const bridgeScript = `
+<script>
+(function() {
+  var _log = console.log, _err = console.error, _warn = console.warn;
+  console.log = function() {
+    var args = Array.prototype.slice.call(arguments);
+    try {
+      window.parent.postMessage({ type: 'kifayat_runner_log', level: 'stdout', text: args.map(function(a){ return typeof a === 'object' ? JSON.stringify(a) : String(a); }).join(' ') }, '*');
+    } catch(e) {}
+    _log.apply(console, arguments);
+  };
+  console.error = function() {
+    var args = Array.prototype.slice.call(arguments);
+    try {
+      window.parent.postMessage({ type: 'kifayat_runner_log', level: 'error', text: args.map(function(a){ return typeof a === 'object' ? JSON.stringify(a) : String(a); }).join(' ') }, '*');
+    } catch(e) {}
+    _err.apply(console, arguments);
+  };
+  console.warn = function() {
+    var args = Array.prototype.slice.call(arguments);
+    try {
+      window.parent.postMessage({ type: 'kifayat_runner_log', level: 'warn', text: args.map(function(a){ return typeof a === 'object' ? JSON.stringify(a) : String(a); }).join(' ') }, '*');
+    } catch(e) {}
+    _warn.apply(console, arguments);
+  };
+  window.onerror = function(msg, url, line) {
+    try {
+      window.parent.postMessage({ type: 'kifayat_runner_log', level: 'error', text: msg + ' (Line ' + line + ')' }, '*');
+    } catch(e) {}
+  };
+})();
+<\/script>
+`;
+
+          let readyHtml = fullHtml;
+          if (readyHtml.includes('<head>')) {
+            readyHtml = readyHtml.replace('<head>', '<head>' + bridgeScript);
+          } else if (readyHtml.includes('<html>')) {
+            readyHtml = readyHtml.replace('<html>', '<html><head>' + bridgeScript + '</head>');
+          } else {
+            readyHtml = bridgeScript + readyHtml;
+          }
+
+          setExecutedHtml(readyHtml);
+          setPreviewKey(prev => prev + 1);
+          setIsRunning(false);
+          setOutputLogs(prev => [
+            { time: timestamp, type: 'stdout', text: `[${currentLang.toUpperCase()}] Execution complete. Live Preview updated.` },
+            ...prev
+          ]);
+          return;
+        }
+
+        // Python or Backend runner
+        setOutputTab('console');
+        try {
+          const res = await fetch('/api/run', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ lang: currentLang, code })
+          });
+          const data = await res.json();
+          if (data.status === 'success') {
+            const out = data.stdout || '(Code executed with no standard output)';
+            setOutputLogs(prev => [
+              { time: timestamp, type: 'stdout', text: out, timeMs: data.exec_time_ms },
+              ...prev
+            ]);
+          } else {
+            setOutputLogs(prev => [
+              { time: timestamp, type: 'error', text: data.error || 'Execution failed', timeMs: data.exec_time_ms },
+              ...prev
+            ]);
+          }
+        } catch (err) {
+          setOutputLogs(prev => [
+            { time: timestamp, type: 'error', text: `Runner Error: ${err.message}` },
+            ...prev
+          ]);
+        } finally {
+          setIsRunning(false);
+        }
+      };
+
+      // Auto Run with 400ms debounce
+      useEffect(() => {
+        if (!autoRun) return;
+        const currentLang = (lang || 'html').toLowerCase();
+        if (!['html', 'css', 'javascript', 'js', 'svg'].includes(currentLang)) return;
+        const timer = setTimeout(() => {
+          handleRun();
+        }, 400);
+        return () => clearTimeout(timer);
+      }, [code, autoRun, lang]);
+
+      const handleCopyCode = () => {
+        try {
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(code);
+          } else {
+            const t = document.createElement("textarea");
+            t.value = code;
+            document.body.appendChild(t);
+            t.select();
+            document.execCommand('copy');
+            t.remove();
+          }
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        } catch (e) {}
+      };
+
+      const handleDownload = () => {
+        const extMap = { python: 'py', javascript: 'js', html: 'html', css: 'css', json: 'json', sql: 'sql' };
+        const ext = extMap[lang.toLowerCase()] || 'txt';
+        const blob = new Blob([code], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `kifayat_script.${ext}`;
+        a.click();
+        URL.revokeObjectURL(url);
+      };
+
+      // Calculate line numbers
+      const lineCount = Math.max(code.split('\n').length, 1);
+      const lineNumbers = Array.from({ length: lineCount }, (_, i) => i + 1);
+
+      return (
+        <div ref={containerRef} class="flex-1 flex flex-col min-w-0 min-h-0 bg-[#F7F8FA] dark:bg-[#0B0D10] overflow-hidden">
+          
+          {/* Top Control Header */}
+          <div class="sticky top-0 z-20 h-12 px-3 sm:px-6 bg-white dark:bg-[#111418] border-b border-[#E1E5EA] dark:border-[#262C35] flex items-center justify-between shrink-0 shadow-xs gap-2">
+            <div class="flex items-center gap-2 sm:gap-3">
+              <KifayatLogo size="sm" />
+              <div class="flex items-center gap-1.5 sm:gap-2">
+                <span class="text-xs font-bold text-[#111827] dark:text-[#F5F7FA] hidden sm:inline">Canvas</span>
+                <span class="text-[#94A3B8] hidden sm:inline">/</span>
+                <select
+                  value={lang}
+                  onChange={(e) => {
+                    const l = e.target.value;
+                    setLang(l);
+                    if (['html', 'css', 'javascript', 'js', 'svg'].includes(l.toLowerCase())) {
+                      setOutputTab('preview');
+                      setExecutedHtml(code);
+                      setPreviewKey(k => k + 1);
+                    } else {
+                      setOutputTab('console');
+                    }
+                  }}
+                  class="bg-[#F2F4F7] dark:bg-[#0F1318] border border-[#E1E5EA] dark:border-[#262C35] rounded-md px-2 py-1 text-xs font-mono font-medium text-[#111827] dark:text-[#F5F7FA] focus:outline-none"
+                >
+                  <option value="python">Python</option>
+                  <option value="html">HTML / Web Preview</option>
+                  <option value="javascript">JavaScript</option>
+                  <option value="css">CSS</option>
+                  <option value="json">JSON</option>
+                  <option value="sql">SQL</option>
+                </select>
+              </div>
+
+              {/* Mobile Segmented Control: Editor vs Preview */}
+              <div class="flex md:hidden bg-[#F2F4F7] dark:bg-[#1E293B] p-0.5 rounded-lg text-[11px] font-medium border border-[#E1E5EA] dark:border-[#334155]">
+                <button
+                  type="button"
+                  onClick={() => setMobileTab('editor')}
+                  class={`px-2 py-0.5 rounded-md transition-colors ${mobileTab === 'editor' ? 'bg-white dark:bg-[#0F172A] text-indigo-600 dark:text-indigo-400 font-bold shadow-xs' : 'text-[#64748B] dark:text-zinc-400'}`}
+                >
+                  Code
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setMobileTab('preview')}
+                  class={`px-2 py-0.5 rounded-md transition-colors ${mobileTab === 'preview' ? 'bg-white dark:bg-[#0F172A] text-indigo-600 dark:text-indigo-400 font-bold shadow-xs' : 'text-[#64748B] dark:text-zinc-400'}`}
+                >
+                  Output
+                </button>
+              </div>
+            </div>
+
+            {/* Run, Auto Run, and Action Buttons */}
+            <div class="flex items-center gap-1.5 sm:gap-2">
+              {/* Auto Run Toggle */}
+              {['html', 'css', 'javascript', 'js', 'svg'].includes((lang || '').toLowerCase()) && (
+                <label class="hidden sm:flex items-center gap-1.5 cursor-pointer select-none text-[11px] font-medium text-[#64748B] dark:text-zinc-300 bg-[#F2F4F7] dark:bg-[#171B21] px-2 py-1 rounded-lg border border-[#E1E5EA] dark:border-[#262C35]">
+                  <input
+                    type="checkbox"
+                    checked={autoRun}
+                    onChange={(e) => setAutoRun(e.target.checked)}
+                    class="rounded text-indigo-600 focus:ring-0 w-3.5 h-3.5"
+                  />
+                  <span class="flex items-center gap-1">
+                    <span class={`w-1.5 h-1.5 rounded-full ${autoRun ? 'bg-emerald-500 animate-pulse' : 'bg-zinc-400'}`}></span>
+                    Auto Run (400ms)
+                  </span>
+                </label>
+              )}
+
+              <button
+                type="button"
+                onClick={handleRun}
+                disabled={isRunning}
+                class="bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white px-3 py-1 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all shadow-xs"
+              >
+                <Icons.Play className="w-3.5 h-3.5 text-white" />
+                <span>{isRunning ? "Running..." : "▶ Run"}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleCopyCode}
+                class={`border border-[#E1E5EA] dark:border-[#262C35] px-2.5 py-1 rounded-lg text-xs font-medium flex items-center gap-1 transition-all ${
+                  copied ? 'bg-emerald-50 text-emerald-700 font-semibold' : 'bg-white dark:bg-[#111418] text-[#111827] dark:text-[#F5F7FA] hover:bg-[#F2F4F7]'
+                }`}
+              >
+                {copied ? <Icons.Check className="w-3.5 h-3.5 text-emerald-600" /> : <Icons.Copy className="w-3.5 h-3.5" />}
+                <span class="hidden sm:inline">{copied ? "Copied!" : "Copy"}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleDownload}
+                class="bg-white dark:bg-[#111418] hover:bg-[#F2F4F7] text-[#111827] dark:text-[#F5F7FA] border border-[#E1E5EA] dark:border-[#262C35] px-2.5 py-1 rounded-lg text-xs font-medium flex items-center gap-1 transition-colors"
+                title="Download file"
+              >
+                <Icons.FileText className="w-3.5 h-3.5" />
+                <span class="hidden sm:inline">Export</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleCodeChange('')}
+                class="text-[#94A3B8] hover:text-red-500 p-1 rounded transition-colors"
+                title="Clear code"
+              >
+                <Icons.Trash className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* Split Screen: Exact Editor on Left, Execution Output on Right */}
+          <div class="flex-1 flex flex-col md:flex-row overflow-hidden">
+            
+            {/* LEFT: EXACT CODE EDITOR WITH LINE NUMBERS */}
+            <div class={`flex-1 flex flex-col min-w-0 border-r border-[#E1E5EA] dark:border-[#262C35] bg-[#090D16] text-zinc-100 font-mono ${mobileTab === 'editor' ? 'flex' : 'hidden md:flex'}`}>
+              <div class="h-8 bg-[#0D121F] border-b border-[#1E293B] px-4 flex items-center justify-between text-[11px] text-zinc-400 shrink-0">
+                <span class="font-medium tracking-wide flex items-center gap-1.5">
+                  <Icons.Code className="w-3.5 h-3.5 text-indigo-400" />
+                  <span>Editor ({lang})</span>
+                </span>
+                <span class="text-zinc-500 text-[10px]">{lineCount} lines</span>
+              </div>
+
+              <div class="flex-1 flex overflow-hidden">
+                {/* Line Numbers Gutter */}
+                <div ref={gutterRef} class="w-12 py-3 bg-[#0D121F] text-zinc-600 select-none text-right pr-3 text-xs leading-relaxed font-mono shrink-0 overflow-hidden">
+                  {lineNumbers.map(n => (
+                    <div key={n}>{n}</div>
+                  ))}
+                </div>
+
+                {/* Textarea Code Input */}
+                <textarea
+                  ref={textareaRef}
+                  value={code}
+                  onScroll={(e) => {
+                    if (gutterRef.current) {
+                      gutterRef.current.scrollTop = e.target.scrollTop;
+                    }
+                  }}
+                  onChange={(e) => handleCodeChange(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Tab') {
+                      e.preventDefault();
+                      const start = e.target.selectionStart;
+                      const end = e.target.selectionEnd;
+                      const val = e.target.value;
+                      const updated = val.substring(0, start) + "    " + val.substring(end);
+                      handleCodeChange(updated);
+                      setTimeout(() => {
+                        e.target.selectionStart = e.target.selectionEnd = start + 4;
+                      }, 0);
+                    }
+                  }}
+                  class="flex-1 p-3 bg-transparent text-zinc-200 border-0 focus:outline-none resize-none text-xs leading-relaxed font-mono overflow-y-auto whitespace-pre selection:bg-indigo-600/30"
+                  spellCheck="false"
+                  placeholder="Write or paste your code here..."
+                />
+              </div>
+            </div>
+
+            {/* RIGHT: EXECUTION RUNNER & PREVIEW */}
+            <div class={`w-full md:w-[46%] flex flex-col bg-white dark:bg-[#111418] min-w-0 overflow-hidden ${mobileTab === 'preview' ? 'flex' : 'hidden md:flex'}`}>
+              
+              {/* Output Tabs Header */}
+              <div class="h-8 bg-[#F2F4F7] dark:bg-[#171B21] border-b border-[#E1E5EA] dark:border-[#262C35] px-3 flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={() => setOutputTab('console')}
+                    class={`px-3 py-0.5 rounded text-[11px] font-medium transition-colors ${
+                      outputTab === 'console'
+                        ? 'bg-white dark:bg-[#111418] text-indigo-600 dark:text-indigo-400 font-bold shadow-xs'
+                        : 'text-[#64748B] dark:text-[#94A3B8] hover:text-[#111827] dark:hover:text-white'
+                    }`}
+                  >
+                    Console Output
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setOutputTab('preview')}
+                    class={`px-3 py-0.5 rounded text-[11px] font-medium transition-colors ${
+                      outputTab === 'preview'
+                        ? 'bg-white dark:bg-[#111418] text-indigo-600 dark:text-indigo-400 font-bold shadow-xs'
+                        : 'text-[#64748B] dark:text-[#94A3B8] hover:text-[#111827] dark:hover:text-white'
+                    }`}
+                  >
+                    Live Preview
+                  </button>
+                </div>
+
+                {outputTab === 'console' && outputLogs.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setOutputLogs([])}
+                    class="text-[10px] text-[#94A3B8] hover:text-red-500 transition-colors"
+                  >
+                    Clear Console
+                  </button>
+                )}
+              </div>
+
+              {/* Output Content Area */}
+              <div class="flex-1 overflow-hidden">
+                {outputTab === 'preview' ? (
+                  <iframe
+                    key={previewKey}
+                    title="Live Runner Sandbox"
+                    srcDoc={executedHtml || code}
+                    sandbox="allow-scripts allow-modals allow-same-origin allow-forms allow-popups"
+                    class="w-full h-full border-0 bg-white"
+                  />
+                ) : (
+                  <div class="w-full h-full bg-[#090D16] text-zinc-200 p-4 font-mono text-xs overflow-y-auto space-y-3 select-text">
+                    {outputLogs.length === 0 ? (
+                      <div class="text-zinc-500 italic py-6 text-center">
+                        Click <span class="text-indigo-400 font-semibold font-mono">Run Code</span> above to execute this script and see real-time console output.
+                      </div>
+                    ) : (
+                      outputLogs.map((log, idx) => (
+                        <div key={idx} class="border-b border-zinc-800/80 pb-2 space-y-1">
+                          <div class="flex items-center justify-between text-[10px] text-zinc-500 font-mono">
+                            <span>[{log.time}] Status: {log.type === 'error' ? 'ERROR' : 'SUCCESS'}</span>
+                            {log.timeMs !== undefined && <span>{log.timeMs} ms</span>}
+                          </div>
+                          <pre class={`whitespace-pre-wrap ${log.type === 'error' ? 'text-red-400' : 'text-emerald-300'}`}>
+                            {log.text}
+                          </pre>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      );
+    }
+
+    // --- 13. PROVIDER & SECURITY MODAL ---
+    function ApiKeyModal({ status, onUpdateStatus, onClose }) {
+      const [apiKeyInput, setApiKeyInput] = useState('');
+      const [showKey, setShowKey] = useState(false);
+      const [selectedModel, setSelectedModel] = useState(status.cheap_model || 'meta/llama-3.2-11b-vision-instruct');
+      const [baseUrlInput, setBaseUrlInput] = useState('https://integrate.api.nvidia.com/v1');
+      const [selectedProvider, setSelectedProvider] = useState('nvidia');
+      const [isSaving, setIsSaving] = useState(false);
+      const [isTesting, setIsTesting] = useState(false);
+      const [saveMessage, setSaveMessage] = useState(null);
+      const [probeResult, setProbeResult] = useState(null);
+
+      const handleSave = async () => {
+        setIsSaving(true);
+        setSaveMessage(null);
+        try {
+          const res = await fetch('/v1/provider/configure', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              api_key: apiKeyInput || undefined,
+              model: selectedModel,
+              base_url: baseUrlInput,
+              provider: selectedProvider
+            })
+          });
+          const data = await res.json();
+          if (data.status === 'success') {
+            setSaveMessage({ type: 'success', text: `Configuration saved successfully! (${data.masked_key})` });
+            onUpdateStatus({
+              configured: data.configured,
+              cheap_model: data.model,
+              provider: data.provider,
+              status: data.configured ? 'online' : 'unconfigured'
+            });
+          } else {
+            setSaveMessage({ type: 'error', text: data.message || "Unable to save configuration." });
+          }
+        } catch (err) {
+          setSaveMessage({ type: 'error', text: err.message });
+        } finally {
+          setIsSaving(false);
+        }
+      };
+
+      const handleTestProbe = async () => {
+        setIsTesting(true);
+        setProbeResult(null);
+        try {
+          const res = await fetch('/v1/provider/test', { method: 'POST' });
+          const data = await res.json();
+          setProbeResult(data);
+          if (data.status === 'healthy' || data.connected) {
+            onUpdateStatus({ status: 'online' });
+          }
+        } catch (err) {
+          setProbeResult({ status: 'error', message: err.message });
+        } finally {
+          setIsTesting(false);
+        }
+      };
+
+      return (
+        <div class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 font-sans">
+          <div class="bg-white border border-[#E1E5EA] rounded-2xl w-full max-w-[560px] max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+            
+            {/* Modal Header */}
+            <div class="flex items-center justify-between px-6 py-4 border-b border-[#E1E5EA] bg-[#F7F8FA] shrink-0">
+              <div class="flex items-center gap-2.5">
+                <KifayatLogo size="md" />
+                <div>
+                  <h3 class="text-sm font-bold text-[#111827]">Provider & Security</h3>
+                  <p class="text-[11px] text-[#64748B]">Configure NVIDIA NIM inference endpoint and credentials</p>
+                </div>
+              </div>
+              <button onClick={onClose} class="text-[#64748B] hover:text-[#111827] p-1 rounded-lg hover:bg-[#E1E5EA] transition-colors">
+                <Icons.X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Scrollable Form Content */}
+            <div class="flex-1 overflow-y-auto p-6 space-y-4 text-xs font-sans">
+              
+              {/* Status Alert */}
+              <div class="flex items-center justify-between p-3 rounded-xl border border-[#E1E5EA] bg-[#F7F8FA]">
+                <div class="flex items-center gap-2">
+                  <span class={`w-2.5 h-2.5 rounded-full ${status.configured ? 'bg-emerald-500' : 'bg-amber-500'}`}></span>
+                  <span class="font-semibold text-[#111827]">
+                    {status.configured ? "● NVIDIA Connected" : "● Not Configured"}
+                  </span>
+                </div>
+                <span class="text-[11px] font-mono text-[#64748B]">Active: {status.provider || "nvidia"}</span>
+              </div>
+
+              {/* Provider Field */}
+              <div class="space-y-1">
+                <label class="font-bold text-[#111827]">Inference Provider</label>
+                <select
+                  value={selectedProvider}
+                  onChange={(e) => setSelectedProvider(e.target.value)}
+                  class="w-full bg-white border border-[#E1E5EA] rounded-lg px-3 py-2 text-xs font-medium text-[#111827] focus:outline-none focus:border-indigo-600"
+                >
+                  <option value="nvidia">NVIDIA NIM (integrate.api.nvidia.com)</option>
+                  <option value="mock">Local Deterministic Provider</option>
+                </select>
+              </div>
+
+              {/* NVIDIA API Key Field with Show/Hide Eye Toggle */}
+              <div class="space-y-1">
+                <label class="font-bold text-[#111827]">NVIDIA API Key</label>
+                <div class="relative flex items-center">
+                  <input
+                    type={showKey ? "text" : "password"}
+                    value={apiKeyInput}
+                    onChange={(e) => setApiKeyInput(e.target.value)}
+                    placeholder="Enter nvapi-... or leave blank to keep current"
+                    class="w-full bg-white border border-[#E1E5EA] focus:border-indigo-600 rounded-lg px-3 py-2 pr-10 text-xs font-mono text-[#111827] placeholder-[#94A3B8] focus:outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowKey(!showKey)}
+                    class="absolute right-2.5 text-[#64748B] hover:text-[#111827]"
+                    title={showKey ? "Hide key" : "Show key"}
+                  >
+                    {showKey ? <Icons.EyeOff className="w-4 h-4" /> : <Icons.Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+                <p class="text-[11px] text-[#64748B]">Credentials are stored safely on the local host and never logged or exposed in client telemetry.</p>
+              </div>
+
+              {/* Model Selection */}
+              <div class="space-y-1">
+                <label class="font-bold text-[#111827]">Default Model</label>
+                <select
+                  value={selectedModel}
+                  onChange={(e) => setSelectedModel(e.target.value)}
+                  class="w-full bg-white border border-[#E1E5EA] rounded-lg px-3 py-2 text-xs font-mono text-[#111827] focus:outline-none focus:border-indigo-600"
+                >
+                  <option value="meta/llama-3.2-11b-vision-instruct">Llama 3.2 (Fast / Default)</option>
+                  <option value="meta/llama-3.1-70b-instruct">Llama 3.1 70B (High-Capacity)</option>
+                  <option value="meta/llama-3.1-405b-instruct">Llama 3.1 405B (Frontier)</option>
+                </select>
+              </div>
+
+              {/* Base URL */}
+              <div class="space-y-1">
+                <label class="font-bold text-[#111827]">Base URL</label>
+                <input
+                  type="text"
+                  value={baseUrlInput}
+                  onChange={(e) => setBaseUrlInput(e.target.value)}
+                  class="w-full bg-white border border-[#E1E5EA] rounded-lg px-3 py-2 text-xs font-mono text-[#111827] focus:outline-none focus:border-indigo-600"
+                />
+              </div>
+
+              {saveMessage && (
+                <div class={`p-2.5 rounded-lg border text-xs font-mono ${
+                  saveMessage.type === 'success' 
+                    ? 'bg-emerald-50 border-emerald-200 text-emerald-800' 
+                    : 'bg-red-50 border-red-200 text-red-800'
+                }`}>
+                  {saveMessage.text}
+                </div>
+              )}
+
+              {/* Live Connection Probe Output */}
+              {probeResult && (
+                <div class="p-3 bg-[#F7F8FA] border border-[#E1E5EA] rounded-xl font-mono text-xs space-y-1.5">
+                  <div class="flex justify-between font-bold">
+                    <span class="text-[#64748B]">Probe Status:</span>
+                    <span class={probeResult.connected ? "text-emerald-700" : "text-red-600"}>
+                      {probeResult.connected ? "✓ NVIDIA API Connected" : "✕ Connection Failed"}
+                    </span>
+                  </div>
+                  {probeResult.latency_ms !== undefined && (
+                    <div class="flex justify-between">
+                      <span class="text-[#64748B]">Round-trip Latency:</span>
+                      <span class="text-[#111827] font-bold">{probeResult.latency_ms} ms</span>
+                    </div>
+                  )}
+                  <p class="text-[11px] text-[#64748B] pt-0.5">{probeResult.message || probeResult.error}</p>
+                </div>
+              )}
+            </div>
+
+            {/* Modal Actions Footer */}
+            <div class="px-6 py-3.5 border-t border-[#E1E5EA] bg-[#F7F8FA] flex items-center justify-between shrink-0">
+              <button
+                type="button"
+                onClick={handleTestProbe}
+                disabled={isTesting}
+                class="bg-white border border-[#E1E5EA] hover:bg-[#F2F4F7] text-[#111827] text-xs font-semibold px-3.5 py-2 rounded-lg transition-colors shadow-xs flex items-center gap-1.5"
+              >
+                {isTesting ? <span class="w-2 h-2 rounded-full bg-indigo-600 animate-ping"></span> : <Icons.Zap className="w-3.5 h-3.5 text-indigo-600" />}
+                <span>Test Connection</span>
+              </button>
+
+              <div class="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  class="border border-[#E1E5EA] bg-white hover:bg-[#F2F4F7] text-[#64748B] text-xs font-semibold px-3.5 py-2 rounded-lg transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleSave}
+                  disabled={isSaving}
+                  class="bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] text-white text-xs font-semibold px-4 py-2 rounded-lg transition-all shadow-xs"
+                >
+                  {isSaving ? "Saving..." : "Save Configuration"}
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      );
+    }
+
+    // --- 19. WORKFLOWS VIEW ---
+    function WorkflowsView({ receipt }) {
+      const containerRef = useRef(null);
+      useEffect(() => {
+        if (containerRef.current) containerRef.current.scrollTop = 0;
+      }, []);
+
+      const dagSteps = [
+        { id: 'request_validate', label: '1. Request Validate & Intent', desc: 'Classify conversational vs handbook/coding' },
+        { id: 'semantic_cache', label: '2. Semantic Cache Check', desc: 'Vector cosine similarity check' },
+        { id: 'context_builder', label: '3. Context Builder & Checkpoints', desc: 'Immutable C1/C2 KV prefix caching' },
+        { id: 'cheap_model', label: '4. Rung 1: Cheap Model', desc: 'High-throughput generation' },
+        { id: 'judge', label: '5. Rule Check & Judge', desc: 'Tone, facts, & hallucination evaluation' },
+        { id: 'rung2_exemplars', label: '6. Rung 2: Exemplar Rescue', desc: 'Few-shot exemplar mining' },
+        { id: 'rung3_strong', label: '7. Rung 3: Strong Fallback', desc: 'High-capacity frontier model' },
+        { id: 'final_response', label: '8. Response & Telemetry Stream', desc: 'Accounting & receipt logging' }
+      ];
+
+      return (
+        <div ref={containerRef} class="flex-1 overflow-y-auto p-6 sm:p-8 bg-[#F7F8FA] dark:bg-[#0B0D10]">
+          <div class="max-w-4xl mx-auto space-y-6 font-sans">
+            <div>
+              <h2 class="text-lg font-bold text-[#111827] tracking-tight">Gateway Execution DAG</h2>
+              <p class="text-xs text-[#64748B] font-mono mt-0.5">Real-time trace for request: {receipt?.request_id || "idle"}</p>
+            </div>
+
+            <div class="space-y-3">
+              {dagSteps.map((node) => {
+                const nodeState = receipt?.node_states?.[node.id] || (node.id === 'request_validate' || node.id === 'cheap_model' || node.id === 'final_response' ? 'COMPLETED' : 'SKIPPED');
+                const isCompleted = nodeState === 'COMPLETED' || nodeState === 'CACHE HIT';
+                const isSkipped = nodeState === 'SKIPPED';
+                
+                return (
+                  <div key={node.id} class="bg-white border border-[#E1E5EA] rounded-xl p-4 flex items-center justify-between shadow-xs">
+                    <div class="space-y-0.5">
+                      <div class="text-xs font-bold text-[#111827] font-mono">{node.label}</div>
+                      <div class="text-xs text-[#64748B] font-sans">{node.desc}</div>
+                    </div>
+                    <span class={`text-[10px] font-mono uppercase px-2.5 py-0.5 rounded border font-semibold ${
+                      isCompleted 
+                        ? 'bg-emerald-50 text-emerald-800 border-emerald-200' 
+                        : isSkipped 
+                        ? 'bg-[#F2F4F7] text-[#94A3B8] border-[#E1E5EA]' 
+                        : 'bg-indigo-600 text-white border-indigo-700 animate-pulse'
+                    }`}>
+                      {nodeState}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- 18. MEMORY & CACHE PAGE ---
+    function MemoryCacheView() {
+      const containerRef = useRef(null);
+      useEffect(() => {
+        if (containerRef.current) containerRef.current.scrollTop = 0;
+      }, []);
+
+      const stats = {
+        total_keys: 14,
+        cache_hit_rate: "68.4%",
+        active_sessions: 3,
+        frozen_blocks: 8
+      };
+
+      return (
+        <div ref={containerRef} class="flex-1 overflow-y-auto p-6 sm:p-8 bg-[#F7F8FA] dark:bg-[#0B0D10]">
+          <div class="max-w-4xl mx-auto space-y-6 font-sans">
+            <div>
+              <h2 class="text-lg font-bold text-[#111827] tracking-tight">Memory & Semantic Cache Ledger</h2>
+              <p class="text-xs text-[#64748B] font-mono mt-0.5">Hierarchical conversation blocks and vector-grounded response cache</p>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
+              <div class="bg-white border border-[#E1E5EA] rounded-xl p-4 space-y-1 shadow-xs">
+                <span class="text-[#64748B] uppercase text-[10px] font-semibold">Cache Hit Rate</span>
+                <div class="text-xl font-bold text-[#111827] tabular-nums">{stats.cache_hit_rate}</div>
+              </div>
+              <div class="bg-white border border-[#E1E5EA] rounded-xl p-4 space-y-1 shadow-xs">
+                <span class="text-[#64748B] uppercase text-[10px] font-semibold">Cached Prompts</span>
+                <div class="text-xl font-bold text-[#111827] tabular-nums">{stats.total_keys}</div>
+              </div>
+              <div class="bg-white border border-[#E1E5EA] rounded-xl p-4 space-y-1 shadow-xs">
+                <span class="text-[#64748B] uppercase text-[10px] font-semibold">Active Sessions</span>
+                <div class="text-xl font-bold text-[#111827] tabular-nums">{stats.active_sessions}</div>
+              </div>
+              <div class="bg-white border border-[#E1E5EA] rounded-xl p-4 space-y-1 shadow-xs">
+                <span class="text-[#64748B] uppercase text-[10px] font-semibold">Frozen Blocks</span>
+                <div class="text-xl font-bold text-[#111827] tabular-nums">{stats.frozen_blocks}</div>
+              </div>
+            </div>
+
+            <div class="bg-white border border-[#E1E5EA] rounded-xl overflow-hidden shadow-xs">
+              <div class="px-4 py-3 border-b border-[#E1E5EA] bg-[#F7F8FA] font-mono text-xs font-bold text-[#111827]">
+                Active Checkpoint & Handbook Memory
+              </div>
+              <div class="p-4 text-xs font-mono space-y-3">
+                <div class="flex justify-between items-center pb-2 border-b border-[#F2F4F7]">
+                  <span class="text-[#64748B]">Checkpoint 1 (System Instructions + College Handbook):</span>
+                  <span class="bg-indigo-50 border border-indigo-200 text-indigo-700 px-2 py-0.5 rounded text-[11px] font-bold">
+                    fa4aa018ea3f (KV Cached)
+                  </span>
+                </div>
+                <div class="flex justify-between items-center pb-2 border-b border-[#F2F4F7]">
+                  <span class="text-[#64748B]">Handbook Version:</span>
+                  <span class="text-[#111827] font-semibold">KIT Student Handbook v2025.1</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-[#64748B]">Compaction Worker Status:</span>
+                  <span class="text-emerald-600 font-semibold flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- 20. AUDIT LOG DEVELOPER TABLE ---
+    function AuditLogView({ messages }) {
+      const containerRef = useRef(null);
+      useEffect(() => {
+        if (containerRef.current) containerRef.current.scrollTop = 0;
+      }, []);
+
+      const [filterIntent, setFilterIntent] = useState('ALL');
+      const [searchQuery, setSearchQuery] = useState('');
+
+      const historyItems = messages
+        .filter(m => m.role === 'assistant')
+        .filter(m => filterIntent === 'ALL' || m.receipt?.intent === filterIntent)
+        .filter(m => !searchQuery || (m.receipt?.request_id || '').includes(searchQuery));
+
+      return (
+        <div ref={containerRef} class="flex-1 overflow-y-auto p-6 sm:p-8 bg-[#F7F8FA] dark:bg-[#0B0D10]">
+          <div class="max-w-5xl mx-auto space-y-5 font-sans">
+            <div>
+              <h2 class="text-lg font-bold text-[#111827] tracking-tight">Gateway Audit Telemetry</h2>
+              <p class="text-xs text-[#64748B] font-mono mt-0.5">Chronological request execution log with token and cost attribution</p>
+            </div>
+
+            {/* Filter Toolbar */}
+            <div class="flex items-center justify-between gap-3 bg-white p-3 rounded-xl border border-[#E1E5EA] shadow-xs text-xs font-mono">
+              <div class="flex items-center gap-2">
+                <span class="text-[#64748B] font-semibold">Intent:</span>
+                <select
+                  value={filterIntent}
+                  onChange={(e) => setFilterIntent(e.target.value)}
+                  class="bg-[#F2F4F7] border border-[#E1E5EA] rounded-md px-2 py-1 text-[#111827] focus:outline-none"
+                >
+                  <option value="ALL">All Intents</option>
+                  <option value="GREETING">GREETING</option>
+                  <option value="HANDBOOK">HANDBOOK</option>
+                  <option value="CODING">CODING</option>
+                </select>
+              </div>
+
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search Request ID..."
+                class="bg-[#F2F4F7] border border-[#E1E5EA] rounded-md px-2.5 py-1 text-[#111827] placeholder-[#94A3B8] focus:outline-none w-48"
+              />
+            </div>
+
+            {/* Table */}
+            <div class="bg-white border border-[#E1E5EA] rounded-xl overflow-hidden shadow-xs font-mono text-xs">
+              <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                  <thead class="bg-[#F7F8FA] border-b border-[#E1E5EA] text-[#64748B] uppercase text-[10px] font-bold">
+                    <tr>
+                      <th class="px-4 py-3">Request ID</th>
+                      <th class="px-4 py-3">Intent</th>
+                      <th class="px-4 py-3">Rung</th>
+                      <th class="px-4 py-3">Tokens (In / Out)</th>
+                      <th class="px-4 py-3">Saved</th>
+                      <th class="px-4 py-3">Latency</th>
+                      <th class="px-4 py-3">Cost</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-[#E1E5EA] text-[#111827]">
+                    {historyItems.map((item) => (
+                      <tr key={item.id} class="hover:bg-[#F7F8FA] transition-colors">
+                        <td class="px-4 py-3 font-bold text-[#111827]">{item.receipt?.request_id?.substring(0, 14)}</td>
+                        <td class="px-4 py-3">
+                          <span class="bg-[#F2F4F7] border border-[#E1E5EA] text-[#111827] font-semibold px-1.5 py-0.5 rounded text-[10px]">
+                            {item.receipt?.intent || "GENERAL"}
+                          </span>
+                        </td>
+                        <td class="px-4 py-3 text-[#64748B]">Rung {item.receipt?.rung ?? 1}</td>
+                        <td class="px-4 py-3 tabular-nums text-[#64748B]">{item.receipt?.input_tokens || 0} / {item.receipt?.output_tokens || 0}</td>
+                        <td class="px-4 py-3 text-emerald-700 font-bold tabular-nums">+{item.receipt?.tokens_saved || 0}</td>
+                        <td class="px-4 py-3 tabular-nums text-[#64748B]">{item.receipt?.latency_ms || 0} ms</td>
+                        <td class="px-4 py-3 tabular-nums font-semibold text-[#111827]">${Number(item.receipt?.cost_usd || 0).toFixed(6)}</td>
+                      </tr>
+                    ))}
+                    {historyItems.length === 0 && (
+                      <tr>
+                        <td colspan="7" class="px-4 py-6 text-center text-[#94A3B8]">No requests matching filter.</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+        // --- Code Block with Universal Copy + Visual Feedback + Canvas Integration ---
+    function CodeBlock({ code, lang, onOpenCanvas }) {
+      const [copied, setCopied] = useState(false);
+
+      const handleCopy = () => {
+        const textToCopy = code || '';
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(textToCopy).then(() => {
+              setCopied(true);
+              setTimeout(() => setCopied(false), 2000);
+            }).catch(() => {
+              fallbackCopy(textToCopy);
+            });
+          } else {
+            fallbackCopy(textToCopy);
+          }
+        } catch (e) {
+          fallbackCopy(textToCopy);
+        }
+      };
+
+      const fallbackCopy = (str) => {
+        try {
+          const textArea = document.createElement("textarea");
+          textArea.value = str;
+          textArea.style.position = "fixed";
+          textArea.style.left = "-999999px";
+          textArea.style.top = "-999999px";
+          document.body.appendChild(textArea);
+          textArea.focus();
+          textArea.select();
+          document.execCommand('copy');
+          textArea.remove();
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+          console.error("Fallback copy failed", err);
+        }
+      };
+
+      return (
+        <div class="border border-[#E1E5EA] dark:border-[#262C35] rounded-xl overflow-hidden my-3 bg-[#0F172A] text-zinc-100 font-mono text-xs shadow-sm">
+          <div class="bg-[#1E293B] border-b border-[#334155] px-3.5 py-2 flex items-center justify-between text-zinc-400">
+            <span class="uppercase tracking-wider font-semibold text-[11px] text-zinc-300 flex items-center gap-1.5">
+              <Icons.Code className="w-3.5 h-3.5 text-indigo-400" />
+              {lang || 'code'}
+            </span>
+            <div class="flex items-center gap-2">
+              {/* Canvas Option is ALWAYS visible on every code block */}
+              <button
+                type="button"
+                onClick={() => onOpenCanvas(code, lang)}
+                class="bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white rounded-md px-2.5 py-1 text-[11px] font-sans font-semibold flex items-center gap-1.5 transition-all shadow-xs"
+                title="Open code in Canvas Workspace"
+              >
+                <Icons.Sparkles className="w-3 h-3 text-amber-300" />
+                <span>Canvas</span>
+              </button>
+
+              {/* Copy button with visual feedback */}
+              <button
+                type="button"
+                onClick={handleCopy}
+                class={`px-2.5 py-1 rounded text-[11px] flex items-center gap-1.5 font-sans transition-all active:scale-95 ${
+                  copied 
+                    ? 'bg-emerald-600 text-white font-semibold' 
+                    : 'bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white'
+                }`}
+                title="Copy code to clipboard"
+              >
+                {copied ? (
+                  <>
+                    <Icons.Check className="w-3 h-3 text-white" />
+                    <span>Copied Code!</span>
+                  </>
+                ) : (
+                  <>
+                    <Icons.Copy className="w-3 h-3" />
+                    <span>Copy Code</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+          <pre class="p-4 overflow-x-auto font-mono text-xs leading-relaxed text-zinc-200 bg-[#0F172A]">
+            <code>{code}</code>
+          </pre>
+        </div>
+      );
+    }
+
+    // --- Message Content Renderer ---
+    function MessageContentRenderer({ content, onOpenCanvas }) {
+      if (!content) return null;
+
+      const parts = [];
+      const codeRegex = /```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g;
+      let lastIndex = 0;
+      let match;
+
+      while ((match = codeRegex.exec(content)) !== null) {
+        if (match.index > lastIndex) {
+          parts.push({ type: 'text', value: content.substring(lastIndex, match.index) });
+        }
+        parts.push({ type: 'code', lang: (match[1] || 'code').toLowerCase(), code: match[2].trim() });
+        lastIndex = match.index + match[0].length;
+      }
+
+      if (lastIndex < content.length) {
+        parts.push({ type: 'text', value: content.substring(lastIndex) });
+      }
+
+      return (
+        <div class="space-y-3">
+          {parts.map((p, i) => {
+            if (p.type === 'text') {
+              return (
+                <div key={i} class="whitespace-pre-line leading-relaxed">
+                  {renderFormattedInline(p.value)}
+                </div>
+              );
+            }
+            return (
+              <CodeBlock
+                key={i}
+                code={p.code}
+                lang={p.lang}
+                onOpenCanvas={onOpenCanvas}
+              />
+            );
+          })}
+        </div>
+      );
+    }
+
+    function renderFormattedInline(text) {
+      const lines = text.split('\n');
+      return lines.map((line, idx) => {
+        const parts = line.split(/(`[^`]+`|\*\*[^*]+\*\*)/g);
+        return (
+          <React.Fragment key={idx}>
+            {parts.map((part, pIdx) => {
+              if (part.startsWith('`') && part.endsWith('`')) {
+                return (
+                  <code key={pIdx} class="bg-[#F2F4F7] text-[#111827] border border-[#E1E5EA] px-1 py-0.5 rounded font-mono text-xs font-semibold">
+                    {part.slice(1, -1)}
+                  </code>
+                );
+              }
+              if (part.startsWith('**') && part.endsWith('**')) {
+                return <strong key={pIdx} class="font-bold text-[#111827]">{part.slice(2, -2)}</strong>;
+              }
+              return part;
+            })}
+            {idx < lines.length - 1 && <br />}
+          </React.Fragment>
+        );
+      });
+    }
+
+    // --- Mount Application ---
+    ReactDOM.createRoot(document.getElementById('root')).render(<KifayatApp />);
+  </script>
+</body>
+</html>

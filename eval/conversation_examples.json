@@ -1,0 +1,511 @@
+{
+  "description": "Kifayat Conversational Evaluation Dataset for Rung 1 optimization and Intent Classification testing",
+  "version": "1.0",
+  "total_examples": 56,
+  "examples": [
+    {
+      "id": "conv-001",
+      "text": "hello",
+      "category": "greeting",
+      "expected_intent": "GREETING",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-002",
+      "text": "hi",
+      "category": "greeting",
+      "expected_intent": "GREETING",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-003",
+      "text": "hey",
+      "category": "greeting",
+      "expected_intent": "GREETING",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-004",
+      "text": "hey there",
+      "category": "greeting",
+      "expected_intent": "GREETING",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-005",
+      "text": "good morning",
+      "category": "greeting",
+      "expected_intent": "GREETING",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-006",
+      "text": "good evening",
+      "category": "greeting",
+      "expected_intent": "GREETING",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-007",
+      "text": "good afternoon",
+      "category": "greeting",
+      "expected_intent": "GREETING",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-008",
+      "text": "namaste",
+      "category": "greeting",
+      "expected_intent": "GREETING",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "hinglish"
+    },
+    {
+      "id": "conv-009",
+      "text": "namaskar",
+      "category": "greeting",
+      "expected_intent": "GREETING",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "hinglish"
+    },
+    {
+      "id": "conv-010",
+      "text": "hello bhai",
+      "category": "greeting",
+      "expected_intent": "GREETING",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "hinglish"
+    },
+    {
+      "id": "conv-011",
+      "text": "how are you?",
+      "category": "casual_conversation",
+      "expected_intent": "CASUAL_CONVERSATION",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-012",
+      "text": "how are you doing today?",
+      "category": "casual_conversation",
+      "expected_intent": "CASUAL_CONVERSATION",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-013",
+      "text": "what's up?",
+      "category": "casual_conversation",
+      "expected_intent": "CASUAL_CONVERSATION",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-014",
+      "text": "how is it going?",
+      "category": "casual_conversation",
+      "expected_intent": "CASUAL_CONVERSATION",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-015",
+      "text": "how do you do?",
+      "category": "casual_conversation",
+      "expected_intent": "CASUAL_CONVERSATION",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-016",
+      "text": "kaise ho?",
+      "category": "casual_conversation",
+      "expected_intent": "CASUAL_CONVERSATION",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "hinglish"
+    },
+    {
+      "id": "conv-017",
+      "text": "kaisa hai bhai?",
+      "category": "casual_conversation",
+      "expected_intent": "CASUAL_CONVERSATION",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "hinglish"
+    },
+    {
+      "id": "conv-018",
+      "text": "kya haal hai?",
+      "category": "casual_conversation",
+      "expected_intent": "CASUAL_CONVERSATION",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "hinglish"
+    },
+    {
+      "id": "conv-019",
+      "text": "kya chal raha hai?",
+      "category": "casual_conversation",
+      "expected_intent": "CASUAL_CONVERSATION",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "hinglish"
+    },
+    {
+      "id": "conv-020",
+      "text": "sab theek?",
+      "category": "casual_conversation",
+      "expected_intent": "CASUAL_CONVERSATION",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "hinglish"
+    },
+    {
+      "id": "conv-021",
+      "text": "all good?",
+      "category": "casual_conversation",
+      "expected_intent": "CASUAL_CONVERSATION",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-022",
+      "text": "thanks",
+      "category": "gratitude",
+      "expected_intent": "GRATITUDE",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-023",
+      "text": "thank you",
+      "category": "gratitude",
+      "expected_intent": "GRATITUDE",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-024",
+      "text": "thank you so much",
+      "category": "gratitude",
+      "expected_intent": "GRATITUDE",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-025",
+      "text": "thanks a lot",
+      "category": "gratitude",
+      "expected_intent": "GRATITUDE",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-026",
+      "text": "many thanks",
+      "category": "gratitude",
+      "expected_intent": "GRATITUDE",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-027",
+      "text": "thx",
+      "category": "gratitude",
+      "expected_intent": "GRATITUDE",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-028",
+      "text": "shukriya",
+      "category": "gratitude",
+      "expected_intent": "GRATITUDE",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "hinglish"
+    },
+    {
+      "id": "conv-029",
+      "text": "dhanyawad",
+      "category": "gratitude",
+      "expected_intent": "GRATITUDE",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "hinglish"
+    },
+    {
+      "id": "conv-030",
+      "text": "thank you bhai",
+      "category": "gratitude",
+      "expected_intent": "GRATITUDE",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "hinglish"
+    },
+    {
+      "id": "conv-031",
+      "text": "acha thanks",
+      "category": "gratitude",
+      "expected_intent": "GRATITUDE",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "hinglish"
+    },
+    {
+      "id": "conv-032",
+      "text": "bye",
+      "category": "farewell",
+      "expected_intent": "FAREWELL",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-033",
+      "text": "goodbye",
+      "category": "farewell",
+      "expected_intent": "FAREWELL",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-034",
+      "text": "see you later",
+      "category": "farewell",
+      "expected_intent": "FAREWELL",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-035",
+      "text": "good night",
+      "category": "farewell",
+      "expected_intent": "FAREWELL",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-036",
+      "text": "have a good day",
+      "category": "farewell",
+      "expected_intent": "FAREWELL",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-037",
+      "text": "alvida",
+      "category": "farewell",
+      "expected_intent": "FAREWELL",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "hinglish"
+    },
+    {
+      "id": "conv-038",
+      "text": "bye milte hain",
+      "category": "farewell",
+      "expected_intent": "FAREWELL",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "hinglish"
+    },
+    {
+      "id": "conv-039",
+      "text": "ok",
+      "category": "simple_acknowledgment",
+      "expected_intent": "SIMPLE_CONVERSATION",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-040",
+      "text": "okay",
+      "category": "simple_acknowledgment",
+      "expected_intent": "SIMPLE_CONVERSATION",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-041",
+      "text": "cool",
+      "category": "simple_acknowledgment",
+      "expected_intent": "SIMPLE_CONVERSATION",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-042",
+      "text": "got it",
+      "category": "simple_acknowledgment",
+      "expected_intent": "SIMPLE_CONVERSATION",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-043",
+      "text": "samajh gaya",
+      "category": "simple_acknowledgment",
+      "expected_intent": "SIMPLE_CONVERSATION",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "hinglish"
+    },
+    {
+      "id": "conv-044",
+      "text": "theek hai",
+      "category": "simple_acknowledgment",
+      "expected_intent": "SIMPLE_CONVERSATION",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "hinglish"
+    },
+    {
+      "id": "conv-045",
+      "text": "awesome",
+      "category": "simple_acknowledgment",
+      "expected_intent": "SIMPLE_CONVERSATION",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "conv-046",
+      "text": "understood",
+      "category": "simple_acknowledgment",
+      "expected_intent": "SIMPLE_CONVERSATION",
+      "expected_is_conversational": true,
+      "expected_max_rung": 1,
+      "language": "en"
+    },
+    {
+      "id": "edge-047",
+      "text": "hello, what documents are required for hostel admission?",
+      "category": "edge_case_handbook",
+      "expected_intent": "HANDBOOK_QUERY",
+      "expected_is_conversational": false,
+      "expected_max_rung": 3,
+      "language": "en"
+    },
+    {
+      "id": "edge-048",
+      "text": "hi, hostel ka fee kitna hai?",
+      "category": "edge_case_handbook",
+      "expected_intent": "HANDBOOK_QUERY",
+      "expected_is_conversational": false,
+      "expected_max_rung": 3,
+      "language": "hinglish"
+    },
+    {
+      "id": "edge-049",
+      "text": "hey! is mess fee included in hostel rent?",
+      "category": "edge_case_handbook",
+      "expected_intent": "HANDBOOK_QUERY",
+      "expected_is_conversational": false,
+      "expected_max_rung": 3,
+      "language": "en"
+    },
+    {
+      "id": "edge-050",
+      "text": "good morning, what is the minimum attendance required for semester exams?",
+      "category": "edge_case_handbook",
+      "expected_intent": "HANDBOOK_QUERY",
+      "expected_is_conversational": false,
+      "expected_max_rung": 3,
+      "language": "en"
+    },
+    {
+      "id": "edge-051",
+      "text": "hello, write a python function to check if a string is a palindrome",
+      "category": "edge_case_coding",
+      "expected_intent": "CODING",
+      "expected_is_conversational": false,
+      "expected_max_rung": 3,
+      "language": "en"
+    },
+    {
+      "id": "edge-052",
+      "text": "hi, create a button in html and css with hover effect",
+      "category": "edge_case_coding",
+      "expected_intent": "CODING",
+      "expected_is_conversational": false,
+      "expected_max_rung": 3,
+      "language": "en"
+    },
+    {
+      "id": "edge-053",
+      "text": "hey, write html and css for a modern 3d glowing card",
+      "category": "edge_case_coding",
+      "expected_intent": "CODING",
+      "expected_is_conversational": false,
+      "expected_max_rung": 3,
+      "language": "en"
+    },
+    {
+      "id": "edge-054",
+      "text": "hello, implement binary search algorithm in python",
+      "category": "edge_case_coding",
+      "expected_intent": "CODING",
+      "expected_is_conversational": false,
+      "expected_max_rung": 3,
+      "language": "en"
+    },
+    {
+      "id": "edge-055",
+      "text": "compare these architectures in detail with tradeoff reasoning",
+      "category": "edge_case_reasoning",
+      "expected_intent": "COMPLEX_TASK",
+      "expected_is_conversational": false,
+      "expected_max_rung": 3,
+      "language": "en"
+    },
+    {
+      "id": "edge-056",
+      "text": "namaste, campus gate curfew timing kya hai?",
+      "category": "edge_case_handbook",
+      "expected_intent": "HANDBOOK_QUERY",
+      "expected_is_conversational": false,
+      "expected_max_rung": 3,
+      "language": "hinglish"
+    }
+  ]
+}

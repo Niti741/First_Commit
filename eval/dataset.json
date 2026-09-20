@@ -1,0 +1,44 @@
+{
+  "conversations": [
+    {
+      "id": "conv-01-hostel-mess",
+      "turns": [
+        "Hostel ka fee kitna hai?",
+        "Isme mess included hai kya?",
+        "Mess mein non-veg khana milta hai kya?",
+        "Hostel ka in-time curfew timing kya hai?"
+      ]
+    },
+    {
+      "id": "conv-02-attendance-exam",
+      "turns": [
+        "What is the minimum attendance required for exams?",
+        "Can medical leave condone attendance below 65%?",
+        "What is the grading scale for theory exams?"
+      ]
+    },
+    {
+      "id": "conv-03-placement",
+      "turns": [
+        "What is the placement eligibility criteria at KIT?",
+        "Where is the placement cell situated on campus?",
+        "What was the highest package for the 2024-25 batch?"
+      ]
+    },
+    {
+      "id": "conv-04-repeat-cache",
+      "turns": [
+        "What is the hostel fee per semester?",
+        "What is the tuition fee for B.Tech CSE?",
+        "What is the hostel fee per semester?"
+      ]
+    }
+  ],
+  "standalone_queries": [
+    "Library se B.Tech student kitni books issue kar sakta hai?",
+    "What is the emergency contact number for Charaka Health Center?",
+    "Who is the Head of the Computer Science Department?",
+    "Kifayat Prerna scholarship ke liye kaun eligible hai?",
+    "What is the late fee penalty for Autumn semester tuition?"
+  ]
+}

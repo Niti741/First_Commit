@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kifayat AI — Intelligent Context Gateway & Assistant</title>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Sticky Navigation Wrapper: Pins both header & nav tabs with 3D glassmorphic depth -->
+  <div class="sticky-nav-wrapper">
+    <header class="app-header">
+      <div class="brand-section">
+        <div class="logo-3d-wrapper" title="Kifayat Intelligent Gateway">
+          <!-- 3D Isometric Quantum Prism / Gateway Logo -->
+          <svg class="logo-3d-svg" width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="prismTop" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#38bdf8" />
+                <stop offset="100%" stop-color="#10b981" />
+              </linearGradient>
+              <linearGradient id="prismLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#818cf8" />
+                <stop offset="100%" stop-color="#4f46e5" />
+              </linearGradient>
+              <linearGradient id="prismRight" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#4338ca" />
+                <stop offset="100%" stop-color="#1e1b4b" />
+              </linearGradient>
+              <filter id="glow3d" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#6366f1" flood-opacity="0.35"/>
+              </filter>
+            </defs>
+            <g filter="url(#glow3d)">
+              <!-- Top Facet (Throughput / Cache) -->
+              <path d="M50 10 L86 30 L50 50 L14 30 Z" fill="url(#prismTop)" />
+              <!-- Left Facet (Intelligence / Router) -->
+              <path d="M14 30 L50 50 L50 90 L14 70 Z" fill="url(#prismLeft)" />
+              <!-- Right Facet (Memory / Depth) -->
+              <path d="M50 50 L86 30 L86 70 L50 90 Z" fill="url(#prismRight)" />
+              <!-- Bevel Edge Reflections -->
+              <path d="M50 10 L50 50 M14 30 L50 50 L86 30" stroke="rgba(255,255,255,0.45)" stroke-width="1.6" stroke-linecap="round" />
+              <!-- 3D Monogram Core K -->
+              <path d="M41 38 L41 64 M41 51 L56 38 M46 47 L58 64" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-title">
+            Kifayat AI
+            <span class="brand-tag">Gateway v2.0</span>
+          </div>
+          <div class="brand-subtitle">
+            Intelligent Context Gateway • AI Assistant
+          </div>
+        </div>
+      </div>
+
+      <div class="header-status">
+        <div class="mode-selector">
+          <label for="gatewayModeSelect">Gateway Mode:</label>
+          <select id="gatewayModeSelect" class="mode-select">
+            <option value="kifayat" selected>Kifayat (Full Optimization)</option>
+            <option value="cache_only">Cache Only</option>
+            <option value="naive">Naive (Rolling Summary)</option>
+            <option value="baseline">Baseline (Uncached)</option>
+          </select>
+        </div>
+
+        <div class="status-indicator">
+          <div class="status-dot" id="statusDot"></div>
+          <span id="statusText">Online</span>
+          <span class="code-pill" id="providerDisplay">MOCK</span>
+        </div>
+
+        <button id="apiKeyModalBtn" class="btn-secondary" style="display:flex; align-items:center; gap:0.4rem; padding:0.35rem 0.75rem; font-size:0.78rem; font-weight:600; border-radius:var(--radius-full);" title="Manage Custom API Key & Security Vault">
+          <span>🔑</span>
+          <span id="apiKeyStatusLabel">API Key</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Clean, Focused Navigation Tabs -->
+    <nav class="nav-tabs-bar">
+      <button class="tab-btn active" data-tab="chat">💬 AI Assistant & Canvas</button>
+      <button class="tab-btn" data-tab="workflow">⚡ Gateway Analytics</button>
+      <button class="tab-btn" data-tab="memory">🧊 Memory & Cache</button>
+    </nav>
+  </div>
+
+  <!-- Main Content Container -->
+  <main class="main-container">
+
+    <!-- TAB 1: CHAT DEMO -->
+    <section id="chatPanel" class="tab-panel active">
+      <div class="chat-split-view">
+        <!-- Chat Column -->
+        <div class="chat-card">
+          <div class="chat-card-header">
+            <div class="chat-title-info">
+              <h3>Kifayat AI Assistant</h3>
+              <p>Versatile intelligence with real-time SSE streaming & context optimization</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <div class="benchmark-toggle-wrapper" title="Run side-by-side Kifayat Gateway vs Unoptimized LLM Benchmark">
+                <label class="switch">
+                  <input type="checkbox" id="benchmarkToggle">
+                  <span class="slider round"></span>
+                </label>
+                <span class="benchmark-label">⚡ A/B Benchmark</span>
+              </div>
+              <button id="openCanvasHeaderBtn" class="btn-secondary" style="display: flex; align-items: center; gap: 0.35rem;" title="Open Interactive Canvas Sandbox">🎨 Canvas</button>
+              <button id="newSessionBtn" class="btn-secondary">New Session</button>
+            </div>
+          </div>
+
+          <div class="chat-history" id="chatHistory">
+            <!-- Messages inserted dynamically -->
+          </div>
+
+          <!-- Quick Query Preset Chips for General AI -->
+          <div class="quick-prompts">
+            <button class="chip-btn" data-query="Create a glowing 3D gradient card in HTML and CSS">🎨 HTML/CSS 3D Card</button>
+            <button class="chip-btn" data-query="Create an interactive counter app in HTML and JavaScript">⚡ Interactive Counter</button>
+            <button class="chip-btn" data-query="Create a modern responsive calculator in HTML CSS JS">🧮 Calculator App</button>
+            <button class="chip-btn" data-query="Write a Python FastAPI endpoint with Pydantic validation">💻 Python FastAPI</button>
+            <button class="chip-btn" data-query="Explain Quantum Computing simply">⚡ Quantum Computing</button>
+          </div>
+
+          <div class="chat-input-container">
+            <input 
+              type="text" 
+              id="chatInput" 
+              class="chat-input" 
+              placeholder="Ask anything (coding, technical explanations, creative writing, reasoning)..." 
+              autocomplete="off"
+            />
+            <button id="sendBtn" class="send-btn">Send</button>
+          </div>
+        </div>
+
+        <!-- Integrated Side Panel (Receipt & Interactive Canvas) -->
+        <div class="chat-side-panel">
+          <div class="side-panel-tabs">
+            <button class="side-panel-tab active" id="tabShowReceipt">🧾 Kifayat Receipt</button>
+            <button class="side-panel-tab" id="tabShowCanvas">
+              🎨 Interactive Canvas
+              <span class="canvas-active-dot" id="canvasActiveDot" style="display:none;"></span>
+            </button>
+          </div>
+
+          <!-- View 1: Receipt Column -->
+          <div class="receipt-panel" id="receiptContainer">
+            <div class="receipt-header">
+              <h4>🧾 Kifayat Receipt</h4>
+            </div>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 1rem;">
+              Submit a question in the chat to view token counts, prompt prefix cache readings, repair ladder rung, and cost savings.
+            </p>
+          </div>
+
+          <!-- View 2: Interactive Canvas Sandbox Drawer (Claude / Canvas style) -->
+          <div class="canvas-drawer" id="canvasDrawer" style="display: none;">
+            <div class="canvas-header">
+              <div style="display: flex; align-items: center; gap: 0.5rem; min-width: 0;">
+                <span style="font-size: 1.15rem;">🎨</span>
+                <div style="min-width: 0;">
+                  <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="canvasTitle">Interactive Preview</div>
+                  <div style="font-size: 0.7rem; color: var(--text-muted);" id="canvasLang">HTML / CSS / JS Sandbox</div>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.35rem;">
+                <button class="btn-secondary" id="canvasTabPreview" style="padding: 0.25rem 0.55rem; font-size: 0.72rem; background: #eef2ff; color: #4f46e5; border-color: #c7d2fe;">Preview</button>
+                <button class="btn-secondary" id="canvasTabCode" style="padding: 0.25rem 0.55rem; font-size: 0.72rem;">Code</button>
+                <button class="btn-secondary" id="canvasCopyBtn" style="padding: 0.25rem 0.55rem; font-size: 0.72rem;" title="Copy Code">📋</button>
+                <button class="btn-secondary" id="canvasExpandBtn" style="padding: 0.25rem 0.55rem; font-size: 0.72rem;" title="Expand Fullscreen">⛶</button>
+                <button class="btn-secondary" id="canvasCloseBtn" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;" title="Switch to Receipt">✕</button>
+              </div>
+            </div>
+            <div class="canvas-body" id="canvasBody">
+              <div class="canvas-empty-state" id="canvasEmptyState" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 2rem; text-align: center; color: var(--text-muted);">
+                <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🎨</div>
+                <div style="font-weight: 600; font-size: 0.95rem; color: var(--text-primary); margin-bottom: 0.4rem;">Canvas Sandbox Ready</div>
+                <p style="font-size: 0.8rem; line-height: 1.5; max-width: 280px; margin-bottom: 1.25rem;">
+                  Generate HTML, CSS, or JavaScript components in chat or click below to launch a live interactive demo.
+                </p>
+                <button class="btn-secondary" id="canvasLoadDemoBtn" style="padding: 0.45rem 1rem; font-size: 0.8rem; background: linear-gradient(135deg, #6366f1, #10b981); color: #fff; border: none; font-weight: 600; border-radius: var(--radius-full); cursor: pointer;">
+                  ✨ Load Interactive Demo
+                </button>
+              </div>
+              <iframe class="canvas-preview-frame" id="canvasPreviewFrame" sandbox="allow-scripts allow-modals allow-forms allow-same-origin" title="Artifact Sandbox" style="display: none;"></iframe>
+              <pre class="canvas-code-view" id="canvasCodeContainer" style="display: none;"><code id="canvasCodeContent"></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: MEMORY & SEMANTIC CACHE -->
+    <section id="memoryPanel" class="tab-panel">
+      <!-- Semantic Vector Response Cache Card -->
+      <div class="content-card" style="margin-bottom: 1.5rem;">
+        <div class="content-card-header">
+          <div>
+            <h3>⚡ Semantic Vector Response Cache</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Zero-token instant response retrieval for semantically equivalent queries</p>
+          </div>
+          <button class="btn-danger" id="clearCacheBtn">Clear Cache</button>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-title">Entries Stored</div>
+            <div class="metric-value" id="cacheEntriesCount">0</div>
+            <div class="metric-subtext">Active vector embeddings</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Lifetime Hits</div>
+            <div class="metric-value" id="cacheLifetimeHits">0</div>
+            <div class="metric-subtext">Zero LLM tokens on hit</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Similarity Threshold</div>
+            <div class="metric-value" id="cacheThresholdDisplay">0.90</div>
+            <div class="metric-subtext">Cosine vector similarity</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Conversation Memory Inspector (Frozen & Raw Blocks) -->
+      <div class="content-card">
+        <div class="content-card-header">
+          <div>
+            <h3>🧊 Conversation Memory Inspector</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Inspect immutable frozen summary blocks and dynamic verbatim raw turn windows</p>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 280px 1fr; gap: 1.5rem;">
+          <div>
+            <h4 style="font-size: 0.9rem; margin-bottom: 0.75rem; color: var(--text-secondary);">Active Sessions</h4>
+            <div id="memorySessionsList">
+              <!-- Loaded dynamically -->
+            </div>
+          </div>
+          <div id="memoryDetailsContainer" style="background: #ffffff; padding: 1.25rem; border: 1px solid var(--border-subtle); border-radius: var(--radius-md);">
+            <p style="font-size: 0.85rem; color: var(--text-muted);">Select a session on the left to inspect its raw turns and frozen summary blocks.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: EXEMPLAR STORE -->
+    <section id="exemplarsPanel" class="tab-panel">
+      <div class="content-card">
+        <div class="content-card-header">
+          <div>
+            <h3>📚 Self-Pruning Exemplar Store</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Vetted prompt repair exemplars with Bayesian win-rate scoring</p>
+          </div>
+        </div>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Query</th>
+                <th>Category</th>
+                <th>Language</th>
+                <th>Selected</th>
+                <th>Rescues</th>
+                <th>Win Rate</th>
+                <th>Bayesian Score</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="exemplarsTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: REQUEST AUDIT LOG -->
+    <section id="requestsPanel" class="tab-panel">
+      <div class="content-card">
+        <div class="content-card-header">
+          <div>
+            <h3>📜 Request Audit Log & Kifayat Receipts</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Real-time ledger of processed queries, token accounting, and repair rungs</p>
+          </div>
+        </div>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Request ID</th>
+                <th>Mode</th>
+                <th>Model</th>
+                <th>Rung</th>
+                <th>Cache</th>
+                <th>Tokens</th>
+                <th>Cost</th>
+                <th>Latency</th>
+                <th>Savings</th>
+              </tr>
+            </thead>
+            <tbody id="requestsTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <!-- TAB 9: WORKFLOW & OBSERVABILITY PIPELINE -->
+    <section id="workflowPanel" class="tab-panel">
+      <!-- Token Savings Dashboard (Prominent Hero Section) -->
+      <div class="wf-hero-card">
+        <div class="wf-hero-header">
+          <div>
+            <h2 style="font-size: 1.25rem; font-weight: 700; color: #0f172a; margin-bottom: 0.25rem;">
+              ⚡ Token Savings & Context Optimization Dashboard
+            </h2>
+            <p style="font-size: 0.82rem; color: #64748b;">
+              Verifiable operational accounting: actual provider-reported tokens vs. estimated avoided tokens
+            </p>
+          </div>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <span class="badge badge-success" style="font-size: 0.8rem; padding: 0.35rem 0.75rem;">● Live Pipeline Telemetry</span>
+          </div>
+        </div>
+
+        <div class="metrics-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-top: 1rem;">
+          <div class="metric-card" style="border-top: 3px solid #10b981;">
+            <div class="metric-title">Total Tokens Saved</div>
+            <div class="metric-value" id="wfTotalSaved" style="color: #10b981;">0</div>
+            <div class="metric-subtext" style="display: flex; justify-content: space-between;">
+              <span id="wfTokensActual" style="color: #059669; font-weight: 600;">0 actual</span>
+              <span id="wfTokensEst" style="color: #64748b;">0 estimated</span>
+            </div>
+          </div>
+
+          <div class="metric-card" style="border-top: 3px solid #6366f1;">
+            <div class="metric-title">Tokens Used</div>
+            <div class="metric-value" id="wfTotalUsed">0</div>
+            <div class="metric-subtext">Provider generation tokens</div>
+          </div>
+
+          <div class="metric-card" style="border-top: 3px solid #06b6d4;">
+            <div class="metric-title">Token Savings %</div>
+            <div class="metric-value" id="wfSavingsPct" style="color: #0891b2;">0.0%</div>
+            <div class="metric-subtext">Overall context efficiency</div>
+          </div>
+
+          <div class="metric-card" style="border-top: 3px solid #f59e0b;">
+            <div class="metric-title">LLM Calls Avoided</div>
+            <div class="metric-value" id="wfCallsAvoided" style="color: #d97706;">0</div>
+            <div class="metric-subtext">100% saved on cache hits</div>
+          </div>
+
+          <div class="metric-card" style="border-top: 3px solid #10b981;">
+            <div class="metric-title">Cache Hit Rate</div>
+            <div class="metric-value" id="wfHitRate">0.0%</div>
+            <div class="metric-subtext">Cosine vector match &ge; 0.90</div>
+          </div>
+
+          <div class="metric-card" style="border-top: 3px solid #8b5cf6;">
+            <div class="metric-title">Context Reduction</div>
+            <div class="metric-value" id="wfContextReduction">0.0%</div>
+            <div class="metric-subtext">Via hierarchical memory</div>
+          </div>
+
+          <div class="metric-card" style="border-top: 3px solid #059669;">
+            <div class="metric-title">Estimated Cost Saved</div>
+            <div class="metric-value" id="wfCostSaved" style="color: #059669;">$0.0000</div>
+            <div class="metric-subtext">Vs unoptimized strong model</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Node-Based Visual Request Pipeline -->
+      <div class="content-card" style="margin-top: 1.5rem;">
+        <div class="content-card-header" style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h3>🔄 Real-Time Request Pipeline Visualizer</h3>
+            <p style="font-size: 0.8rem; color: #64748b;">
+              Click any node to inspect execution latency, similarity score, model parameters, and judge verdicts.
+            </p>
+          </div>
+          <div style="font-size: 0.82rem; color: #475569;">
+            Inspecting Request: <code id="activeReqIdDisplay" style="background:#f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600; color: var(--brand-600);">None selected</code>
+          </div>
+        </div>
+
+        <!-- Interactive Node Graph Container -->
+        <div class="wf-graph-canvas">
+          <!-- Row 1: Ingestion & Cache Verification -->
+          <div class="wf-row">
+            <div class="wf-node" data-node-id="request_validate">
+              <div class="wf-node-icon">📥</div>
+              <div class="wf-node-title">1. Request Validate</div>
+              <div class="wf-node-desc">Length, language & safety check</div>
+              <div class="wf-node-status">WAITING</div>
+            </div>
+
+            <div class="wf-arrow">&rarr;</div>
+
+            <div class="wf-node" data-node-id="semantic_cache">
+              <div class="wf-node-icon">⚡</div>
+              <div class="wf-node-title">2. Semantic Cache</div>
+              <div class="wf-node-desc">Cosine vector lookup (384-d)</div>
+              <div class="wf-node-status">WAITING</div>
+            </div>
+
+            <div class="wf-arrow">&rarr;</div>
+
+            <div class="wf-node" data-node-id="context_builder">
+              <div class="wf-node-icon">🧱</div>
+              <div class="wf-node-title">3. Context Builder</div>
+              <div class="wf-node-desc">Checkpoint hashing & prompt layers</div>
+              <div class="wf-node-status">WAITING</div>
+            </div>
+          </div>
+
+          <!-- Row 2: Retrieval & Context Aggregation -->
+          <div class="wf-row">
+            <div class="wf-node" data-node-id="memory_retrieval">
+              <div class="wf-node-icon">🧊</div>
+              <div class="wf-node-title">4. Memory Retrieval</div>
+              <div class="wf-node-desc">Raw turns & frozen summary blocks</div>
+              <div class="wf-node-status">WAITING</div>
+            </div>
+
+            <div class="wf-arrow">&rarr;</div>
+
+            <div class="wf-node" data-node-id="exemplar_search">
+              <div class="wf-node-icon">📚</div>
+              <div class="wf-node-title">5. Exemplar Search</div>
+              <div class="wf-node-desc">Self-pruned few-shot retrieval</div>
+              <div class="wf-node-status">WAITING</div>
+            </div>
+
+            <div class="wf-arrow">&rarr;</div>
+
+            <div class="wf-node" data-node-id="cheap_model">
+              <div class="wf-node-icon">🪜</div>
+              <div class="wf-node-title">6. Cheap Model (R1)</div>
+              <div class="wf-node-desc">Llama-3.2 11B Low-Cost Inference</div>
+              <div class="wf-node-status">WAITING</div>
+            </div>
+          </div>
+
+          <!-- Row 3: Repair Ladder & Verification Verification -->
+          <div class="wf-row">
+            <div class="wf-node" data-node-id="judge">
+              <div class="wf-node-icon">⚖️</div>
+              <div class="wf-node-title">7. Judge Verification</div>
+              <div class="wf-node-desc">Automated correctness verification</div>
+              <div class="wf-node-status">WAITING</div>
+            </div>
+
+            <div class="wf-arrow">&rarr;</div>
+
+            <div class="wf-node" data-node-id="rung2_exemplars">
+              <div class="wf-node-icon">🛟</div>
+              <div class="wf-node-title">8. Rung 2 Rescue</div>
+              <div class="wf-node-desc">Exemplar injection on failure</div>
+              <div class="wf-node-status">WAITING</div>
+            </div>
+
+            <div class="wf-arrow">&rarr;</div>
+
+            <div class="wf-node" data-node-id="rung3_strong">
+              <div class="wf-node-icon">🛡️</div>
+              <div class="wf-node-title">9. Strong Fallback</div>
+              <div class="wf-node-desc">High-capacity safety net</div>
+              <div class="wf-node-status">WAITING</div>
+            </div>
+          </div>
+
+          <!-- Row 4: Response Streaming & Asynchronous Background Tasks -->
+          <div class="wf-row">
+            <div class="wf-node" data-node-id="final_response">
+              <div class="wf-node-icon">💬</div>
+              <div class="wf-node-title">10. Final Response</div>
+              <div class="wf-node-desc">Kifayat verified answer payload</div>
+              <div class="wf-node-status">WAITING</div>
+            </div>
+
+            <div class="wf-arrow">&rarr;</div>
+
+            <div class="wf-node" data-node-id="stream_user">
+              <div class="wf-node-icon">📡</div>
+              <div class="wf-node-title">11. Progressive Stream</div>
+              <div class="wf-node-desc">Real-time SSE token delivery</div>
+              <div class="wf-node-status">WAITING</div>
+            </div>
+
+            <div class="wf-arrow">&rarr;</div>
+
+            <div class="wf-node" data-node-id="async_compaction">
+              <div class="wf-node-icon">⏳</div>
+              <div class="wf-node-title">12. Async Compaction</div>
+              <div class="wf-node-desc">Non-blocking background memory worker</div>
+              <div class="wf-node-status">WAITING</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Node Inspection Drawer (Interactive Modal/Drawer) -->
+        <div id="nodeDetailsDrawer" class="node-details-drawer" style="display: none;">
+          <div class="drawer-header">
+            <h4 id="nodeDrawerTitle" style="font-size: 0.95rem; font-weight: 700; color: #0f172a;">Node Inspection</h4>
+            <button id="closeNodeDrawerBtn" class="btn-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.8rem;">✕ Close</button>
+          </div>
+          <div id="nodeDrawerContent" class="drawer-body">
+            <!-- Dynamically populated on node click -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts & Visual Analytics Grid -->
+      <div class="charts-2col-grid" style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+        <!-- Chart 1: Tokens Used vs Saved -->
+        <div class="content-card">
+          <div class="content-card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <h3>📊 Tokens Used vs. Tokens Saved</h3>
+              <p style="font-size: 0.78rem; color: #64748b;">Per-request token expenditure vs optimization savings</p>
+            </div>
+            <div class="token-range-selector">
+              <button class="chip-btn token-range-btn active" data-range="10">Last 10</button>
+              <button class="chip-btn token-range-btn" data-range="25">Last 25</button>
+              <button class="chip-btn token-range-btn" data-range="50">Last 50</button>
+            </div>
+          </div>
+          <div style="padding: 1rem 0;">
+            <canvas id="tokensChartCanvas"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 2: Workflow Path Distribution -->
+        <div class="content-card">
+          <div class="content-card-header">
+            <h3>🧭 Execution Path Breakdown</h3>
+            <p style="font-size: 0.78rem; color: #64748b;">Cache Hit vs Rung 1, 2, 3 paths</p>
+          </div>
+          <div style="padding: 1rem 0;">
+            <canvas id="distributionChartCanvas"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Observability Grid -->
+      <div class="charts-2col-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+        <!-- Chart 3: Model Usage Breakdown -->
+        <div class="content-card">
+          <div class="content-card-header">
+            <h3>🤖 Model & Subsystem Invocations</h3>
+            <p style="font-size: 0.78rem; color: #64748b;">Calls routed to Cheap, Strong, Judge & Embeddings</p>
+          </div>
+          <div style="padding: 1rem 0;">
+            <canvas id="modelUsageChartCanvas"></canvas>
+          </div>
+        </div>
+
+        <!-- Request Timeline Inspector -->
+        <div class="content-card">
+          <div class="content-card-header">
+            <h3>⏱️ Microsecond Request Timeline</h3>
+            <p style="font-size: 0.78rem; color: #64748b;">Granular event sequence for active request</p>
+          </div>
+          <div id="wfTimelineContainer" class="wf-timeline-container">
+            <div style="color: #94a3b8; font-size: 0.85rem; padding: 1rem;">Select a request from the table below to inspect its execution timeline.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Request Filter & Audit Selector -->
+      <div class="content-card" style="margin-top: 1.5rem;">
+        <div class="content-card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h3>📜 Request Audit Explorer</h3>
+            <p style="font-size: 0.8rem; color: #64748b;">Filter and inspect real requests processed by Kifayat Context Gateway</p>
+          </div>
+          <div style="display: flex; gap: 0.75rem; align-items: center;">
+            <select id="workflowFilterSelect" class="mode-select" style="font-size: 0.82rem; padding: 0.35rem 0.65rem;">
+              <option value="">All Requests</option>
+              <option value="cache_hit">⚡ Cache Hits Only</option>
+              <option value="cache_miss">Cache Misses Only</option>
+              <option value="rung_1">🪜 Rung 1 (Cheap)</option>
+              <option value="rung_2">🪜 Rung 2 (Rescue)</option>
+              <option value="rung_3">🪜 Rung 3 (Strong)</option>
+              <option value="failed">✕ Failed Verifications</option>
+            </select>
+            <input type="text" id="workflowSearchInput" placeholder="Search Request ID..." class="chat-input" style="width: 180px; font-size: 0.8rem; padding: 0.35rem 0.65rem;">
+          </div>
+        </div>
+
+        <div class="data-table-wrapper" style="max-height: 280px; overflow-y: auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Request ID</th>
+                <th>Cache Status</th>
+                <th>Execution Rung</th>
+                <th>Tokens Saved</th>
+                <th>Latency</th>
+                <th>Savings %</th>
+                <th>Timestamp</th>
+              </tr>
+            </thead>
+            <tbody id="wfRequestsTableBody">
+              <!-- Dynamically populated by workflow.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- SECURE API KEY & VAULT MODAL -->
+  <div id="apiKeyModal" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <span style="font-size: 1.4rem;">🔐</span>
+          <div>
+            <h3 style="margin: 0; font-size: 1.05rem; font-weight: 700;">Secure API Key & Provider Vault</h3>
+            <p style="margin: 0; font-size: 0.76rem; color: var(--text-muted);">Manage your personal API key for dynamic quota switching</p>
+          </div>
+        </div>
+        <button id="closeApiKeyModalBtn" class="canvas-btn-close" style="background:none; border:none; font-size:1.1rem; cursor:pointer;">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Security Trust Shield Alert -->
+        <div class="security-shield-banner">
+          <span style="font-size: 1.3rem;">🛡️</span>
+          <div>
+            <strong>Zero-Leakage Ephemeral Vault</strong>
+            <p>Your API key is stored only in your local browser session. It is transmitted directly over TLS in the request header and is <em>never logged in plaintext, never written to disk, and never exposed to other users</em>.</p>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top: 1rem;">
+          <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Provider:</label>
+          <select id="userKeyProviderSelect" class="mode-select" style="width: 100%; margin-top: 0.35rem;">
+            <option value="nvidia">NVIDIA NIM (LLaMA-3.2 / DeepSeek / Mistral)</option>
+            <option value="openai">OpenAI (GPT-4o / O1 / Custom)</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-top: 1rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Personal API Key:</label>
+            <button id="toggleKeyVisibilityBtn" type="button" style="background: none; border: none; font-size: 0.75rem; color: var(--brand-600); cursor: pointer; font-weight: 600;">👁️ Show</button>
+          </div>
+          <input 
+            type="password" 
+            id="userApiKeyInput" 
+            class="chat-input" 
+            style="width: 100%; margin-top: 0.35rem; font-family: var(--font-mono); font-size: 0.82rem; padding: 0.55rem 0.85rem;" 
+            placeholder="Paste nvapi-... or sk-... here" 
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.35rem;" id="keyValidationNotice">
+            Only alphanumeric characters, dashes, and dots allowed (16-128 chars).
+          </div>
+        </div>
+
+        <!-- Active Key Status Card -->
+        <div id="keyStatusCard" class="key-status-box">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-weight: 600;">Current Active Mode:</span>
+            <span id="activeKeyBadge" class="rung-pill rung-1">System Default Key</span>
+          </div>
+          <div id="activeKeyMasked" style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--text-muted); margin-top: 0.3rem;">
+            Using gateway shared server credential
+          </div>
+        </div>
+
+        <div id="modalAlert" style="display: none; margin-top: 0.75rem; padding: 0.5rem 0.8rem; border-radius: 6px; font-size: 0.78rem;"></div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="testApiKeyBtn" class="btn-secondary" style="font-size: 0.8rem;">⚡ Test Connection</button>
+        <button id="resetDefaultKeyBtn" class="btn-secondary" style="font-size: 0.8rem; color: #ef4444;">Revert to Default</button>
+        <button id="saveApiKeyBtn" class="send-btn" style="padding: 0.45rem 1.2rem; font-size: 0.82rem;">Save & Activate</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/workflow.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
+

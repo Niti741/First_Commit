@@ -1,0 +1,32 @@
+[Unit]
+Description=Kifayat AI — Production Intelligent AI Inference Gateway & Assistant
+After=network.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/first_commit
+EnvironmentFile=/home/ubuntu/first_commit/.env
+
+# Execute Uvicorn with 2 async worker processes
+ExecStart=/home/ubuntu/first_commit/venv/bin/uvicorn backend.app.main:app \
+    --host 127.0.0.1 \
+    --port 8000 \
+    --workers 2 \
+    --proxy-headers \
+    --forwarded-allow-ips "*" \
+    --access-log
+
+# Self-healing: restart automatically if process crashes
+Restart=always
+RestartSec=5s
+
+# Resource and file descriptor limits for high concurrency
+LimitNOFILE=65535
+TimeoutStopSec=20
+KillMode=mixed
+
+[Install]
+WantedBy=multi-user.target
